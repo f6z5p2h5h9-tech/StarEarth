@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI 课程助手 · 星与土</title>
+  <meta name="description" content="星与土AI课程大纲生成器，基于教育理念自动生成PBL课程设计方案">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="course-common.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="page-header">
+    <a href="index.html" class="nav-logo"><span class="nav-logo-mascots"><img src="assets/star-mascot.png" alt="星星"><img src="assets/earth-mascot.png" alt="土土"></span>
+      <span class="logo-star">星</span><span class="logo-amp">与</span><span class="logo-earth">土</span>
+    </a>
+    <div class="nav-links">
+      <div class="nav-group has-active">
+        <button class="nav-group-trigger">📖 课程开发</button>
+        <div class="nav-dropdown">
+          <a href="index.html" class="nav-dropdown-item">开发指南</a>
+          <a href="course-submit.html" class="nav-dropdown-item">提交课程</a>
+          <a href="ai-generator.html" class="nav-dropdown-item active">AI 助手</a>
+        </div>
+      </div>
+      <div class="nav-group">
+        <button class="nav-group-trigger">📋 评审管理</button>
+        <div class="nav-dropdown">
+          <a href="topic-review.html" class="nav-dropdown-item">选题评审</a>
+          <a href="course-review.html" class="nav-dropdown-item">课程评审</a>
+        </div>
+      </div>
+      <div class="nav-group">
+        <button class="nav-group-trigger">📊 资源中心</button>
+        <div class="nav-dropdown">
+          <a href="pbl-cases.html" class="nav-dropdown-item">案例库</a>
+          <a href="course-map.html" class="nav-dropdown-item">全景图</a>
+        </div>
+      </div>
+      <div class="nav-group">
+        <button class="nav-group-trigger">🚀 运营工具</button>
+        <div class="nav-dropdown">
+          <a href="ai-marketing.html" class="nav-dropdown-item">AI 内容生成</a>
+          <a href="ops-dashboard.html" class="nav-dropdown-item">运营看板</a>
+        </div>
+      </div>
+      <div class="nav-group">
+        <button class="nav-group-trigger">⚙️ 管理</button>
+        <div class="nav-dropdown">
+          <a href="admin-dashboard.html" class="nav-dropdown-item">管理后台</a>
+        </div>
+      </div>
+      <div class="nav-user">
+        <button class="nav-user-btn" id="nav-user-btn" onclick="window.__switchUser && window.__switchUser()">
+          <span class="nav-user-avatar" id="nav-user-avatar">?</span>
+          <span id="nav-user-name">未登录</span>
+        </button>
+      </div>
+      <button id="theme-toggle" aria-label="切换主题" style="background:none;border:none;color:var(--text-secondary);cursor:pointer;padding:6px;">
+        <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="2"/><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></g></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="page-main" style="max-width:960px">
+    <h1 class="page-title">🤖 AI 课程设计助手</h1>
+    <p class="page-desc">输入你的课程想法，AI 将基于星与土教育理念，为你生成完整的 PBL 课程大纲</p>
+
+    <div class="ai-input-section">      <div class="form-card">
+        <div class="form-card-title"><span class="card-icon icon-basic">💡</span> 你的课程想法</div>
+        <div class="form-group">
+          <label class="form-label">描述你的课程灵感 <span class="required">*</span></label>
+          <p class="form-hint">可以是模糊的想法，AI 会帮你具体化。例如："想做一个关于桥梁和结构力学的课""以中国古代四大发明为主题""让孩子通过真实辩论理解民主"</p>
+          <textarea class="form-textarea ai-idea-input" id="ai-idea" required placeholder="输入你的课程想法..." style="min-height:120px"></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">目标年龄段 <span class="required">*</span></label>
+            <select class="form-select" id="ai-age" required>
+              <option value="">选择年龄段</option>
+              <option value="K（5-6岁·启蒙期）">K（5-6岁）</option>
+              <option value="G1-G2（6-8岁·能力建构期）">G1-G2（6-8岁）</option>
+              <option value="G3-G4（8-10岁·深度探索期）">G3-G4（8-10岁）</option>
+              <option value="G5-G6（10-12岁·独立思辨期）">G5-G6（10-12岁）</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">课程类型</label>
+            <select class="form-select" id="ai-type">
+              <option value="常规课（3小时）">常规课（3小时）</option>
+              <option value="营地课（5天）">营地课（5天）</option>
+              <option value="户外研学（1天）">户外研学（1天）</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">所属板块</label>
+          <p class="form-hint">可多选，鼓励跨板块设计</p>
+          <div class="module-checks" id="ai-modules">
+            <label class="module-check-item"><input type="checkbox" value="STEAM" checked> <span class="module-check-icon">🔬</span> STEAM</label>
+            <label class="module-check-item"><input type="checkbox" value="人文与思辨"> <span class="module-check-icon">📚</span> 人文与思辨</label>
+            <label class="module-check-item"><input type="checkbox" value="玩耍与体育"> <span class="module-check-icon">⚽</span> 玩耍与体育</label>
+            <label class="module-check-item"><input type="checkbox" value="自然与生活"> <span class="module-check-icon">🌿</span> 自然与生活</label>
+          </div>
+        </div>
+
+        <div class="ai-actions">
+          <button type="button" class="btn-ai-generate" id="btn-generate" disabled>
+            <span class="btn-ai-icon">✨</span>
+            <span class="btn-ai-text">生成课程大纲</span>
+          </button>
+          <p class="ai-hint" id="ai-hint">请填写课程想法和选择年龄段</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Output Section -->
+    <div class="ai-output-section" id="ai-output" style="display:none">
+      <!-- Loading State -->
+      <div class="ai-loading" id="ai-loading" style="display:none">
+        <div class="ai-loading-dots">
+          <span></span><span></span><span></span>
+        </div>
+        <p>AI 正在结合星与土教育理念生成课程大纲...</p>
+        <p class="ai-loading-sub">通常需要 10-20 秒</p>
+      </div>
+
+      <!-- Result -->
+      <div class="ai-result" id="ai-result" style="display:none">
+        <div class="ai-result-header">
+          <h2>📋 生成的课程大纲</h2>
+          <div class="ai-result-actions">
+            <button class="btn-ai-action" id="btn-regenerate" title="重新生成">🔄 重新生成</button>
+            <button class="btn-ai-action" id="btn-copy" title="复制内容">📋 复制</button>
+          </div>
+        </div>
+        <div class="ai-result-content" id="ai-result-content">
+          <!-- Markdown rendered content -->
+        </div>
+        <div class="ai-result-footer">
+          <p class="ai-disclaimer">⚠️ AI 生成的内容仅供参考，请结合实际教学经验调整完善</p>
+        </div>
+      </div>
+
+      <!-- Error -->
+      <div class="ai-error" id="ai-error" style="display:none">
+        <div class="ai-error-icon">⚠️</div>
+        <h3>生成失败</h3>
+        <p id="ai-error-msg"></p>
+        <button class="btn-ai-action" id="btn-retry">重试</button>
+      </div>
+    </div>
+  </main>
+
+  <div class="toast" id="toast"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-client.js"></script>
+  <script src="user-identity.js"></script>
+  <script src="ai-generator.js"></script>
+</body>
+</html>

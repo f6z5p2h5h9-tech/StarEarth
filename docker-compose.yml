@@ -1,0 +1,24 @@
+# StarEarth 本地开发环境
+# 启动: docker compose up -d
+# 停止: docker compose down
+# 清除数据重建: docker compose down -v && docker compose up -d
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: starearth-db
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: starearth
+      POSTGRES_USER: starearth
+      POSTGRES_PASSWORD: starearth123
+    volumes:
+      # 数据持久化
+      - pgdata:/var/lib/postgresql/data
+      # 初始化脚本（首次启动自动执行）
+      - ./supabase/migrations/001_local_init.sql:/docker-entrypoint-initdb.d/001_init.sql
+
+volumes:
+  pgdata:

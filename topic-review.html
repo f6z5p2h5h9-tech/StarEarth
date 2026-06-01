@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>选题评审 · 星与土</title>
+  <meta name="description" content="星与土课程选题评审工具，在前期研发阶段初步判断选题是否符合标准">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="course-common.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="page-header">
+    <a href="index.html" class="nav-logo"><span class="nav-logo-mascots"><img src="assets/star-mascot.png" alt="星星"><img src="assets/earth-mascot.png" alt="土土"></span>
+      <span class="logo-star">星</span><span class="logo-amp">与</span><span class="logo-earth">土</span>
+    </a>
+    <div class="nav-links">
+      <div class="nav-group">
+        <button class="nav-group-trigger">📖 课程开发</button>
+        <div class="nav-dropdown">
+          <a href="index.html" class="nav-dropdown-item">开发指南</a>
+          <a href="course-submit.html" class="nav-dropdown-item">提交课程</a>
+          <a href="ai-generator.html" class="nav-dropdown-item">AI 助手</a>
+        </div>
+      </div>
+      <div class="nav-group has-active">
+        <button class="nav-group-trigger">📋 评审管理</button>
+        <div class="nav-dropdown">
+          <a href="topic-review.html" class="nav-dropdown-item active">选题评审</a>
+          <a href="course-review.html" class="nav-dropdown-item">课程评审</a>
+        </div>
+      </div>
+      <div class="nav-group">
+        <button class="nav-group-trigger">📊 资源中心</button>
+        <div class="nav-dropdown">
+          <a href="pbl-cases.html" class="nav-dropdown-item">案例库</a>
+          <a href="course-map.html" class="nav-dropdown-item">全景图</a>
+        </div>
+      </div>
+      <div class="nav-group">
+        <button class="nav-group-trigger">🚀 运营工具</button>
+        <div class="nav-dropdown">
+          <a href="ai-marketing.html" class="nav-dropdown-item">AI 内容生成</a>
+          <a href="ops-dashboard.html" class="nav-dropdown-item">运营看板</a>
+        </div>
+      </div>
+      <div class="nav-group">
+        <button class="nav-group-trigger">⚙️ 管理</button>
+        <div class="nav-dropdown">
+          <a href="admin-dashboard.html" class="nav-dropdown-item">管理后台</a>
+        </div>
+      </div>
+      <div class="nav-user">
+        <button class="nav-user-btn" id="nav-user-btn" onclick="window.__switchUser && window.__switchUser()">
+          <span class="nav-user-avatar" id="nav-user-avatar">?</span>
+          <span id="nav-user-name">未登录</span>
+        </button>
+      </div>
+      <button id="theme-toggle" aria-label="切换主题" style="background:none;border:none;color:var(--text-secondary);cursor:pointer;padding:6px;">
+        <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="2"/><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></g></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="page-main">
+    <h1 class="page-title">📋 课程选题评审</h1>
+    <p class="page-desc">在正式开发课程之前，先用这个工具快速评估你的选题是否符合星与土的教育标准</p>
+
+    <!-- Tab Switcher -->
+    <div class="topic-tabs">
+      <button class="topic-tab active" data-tab="submit" id="tab-btn-submit">提交选题</button>
+      <button class="topic-tab" data-tab="list" id="tab-btn-list">已提交选题 <span class="topic-count" id="topic-count">0</span></button>
+    </div>
+
+    <!-- ===== Tab 1: Submit Topic ===== -->
+    <div class="topic-panel active" id="panel-submit">
+      <form id="topic-form" autocomplete="off">
+
+        <!-- Section 1: Basic Info -->
+        <div class="form-card">
+          <div class="form-card-title"><span class="card-icon icon-basic">🎯</span> 选题基本信息</div>
+
+          <div class="form-group">
+            <label class="form-label">课题名称 <span class="required">*</span></label>
+            <input type="text" class="form-input" id="t-title" required placeholder="给你的选题起一个简洁、有吸引力的名字">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">提交教师 <span class="required">*</span></label>
+            <input type="text" class="form-input" id="t-teacher" required placeholder="你的名字" style="max-width:280px">
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">适用年龄段 <span class="required">*</span></label>
+              <select class="form-select" id="t-age" required>
+                <option value="">选择年龄段</option>
+                <option value="K">K · 探索启蒙期</option>
+                <option value="G1-G2">G1-G2 · 能力建构期</option>
+                <option value="G3-G4">G3-G4 · 深度探索期</option>
+                <option value="G5-G6">G5-G6 · 独立思辨期</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">课程类型 <span class="required">*</span></label>
+              <select class="form-select" id="t-type" required>
+                <option value="">选择类型</option>
+                <option value="常规课">常规课</option>
+                <option value="营地课（5天）">营地课（5天）</option>
+                <option value="户外研学">户外研学</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">所属板块 <span class="required">*</span></label>
+            <p class="form-hint">可多选，鼓励跨板块课程</p>
+            <div class="module-checks" id="t-modules">
+              <label class="module-check-item"><input type="checkbox" value="STEAM"> <span class="module-check-icon">🔬</span> STEAM</label>
+              <label class="module-check-item"><input type="checkbox" value="人文与思辨"> <span class="module-check-icon">📚</span> 人文与思辨</label>
+              <label class="module-check-item"><input type="checkbox" value="玩耍与体育"> <span class="module-check-icon">⚽</span> 玩耍与体育</label>
+              <label class="module-check-item"><input type="checkbox" value="自然与生活"> <span class="module-check-icon">🌿</span> 自然与生活</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 2: Core Design -->
+        <div class="form-card">
+          <div class="form-card-title"><span class="card-icon icon-pbl">💡</span> 选题核心设计</div>
+
+          <div class="form-group">
+            <label class="form-label">核心驱动问题 (Essential Question) <span class="required">*</span></label>
+            <p class="form-hint">一个真实的、有意义的、开放性的核心问题，能激发好奇心且没有唯一答案</p>
+            <textarea class="form-textarea" id="t-driving" required placeholder="例：如何设计一个水枪检测装置，让打水仗可以知道输赢？"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">选题来源 / 灵感说明 <span class="required">*</span></label>
+            <p class="form-hint">这个选题是怎么来的？为什么觉得它有价值？</p>
+            <textarea class="form-textarea" id="t-inspiration" required placeholder="例：观察到学生在户外玩水枪时争论谁赢了，想到可以结合传感器和编程来解决这个真实问题..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">预期培养的能力与素质 <span class="required">*</span></label>
+            <p class="form-hint">对照星与土教育目标，选择本课题预期培养的能力（至少选 2 项）</p>
+            <div class="ability-checks" id="t-abilities">
+              <div class="ability-group">
+                <div class="ability-group-label">关键能力</div>
+                <label class="ability-check-item"><input type="checkbox" value="解决问题的能力"> 解决问题的能力</label>
+                <label class="ability-check-item"><input type="checkbox" value="创造力"> 创造力</label>
+                <label class="ability-check-item"><input type="checkbox" value="学习能力"> 学习能力</label>
+              </div>
+              <div class="ability-group">
+                <div class="ability-group-label">思维与精神</div>
+                <label class="ability-check-item"><input type="checkbox" value="批判思维"> 批判思维</label>
+                <label class="ability-check-item"><input type="checkbox" value="成长型思维"> 成长型思维</label>
+                <label class="ability-check-item"><input type="checkbox" value="全局思维"> 全局思维</label>
+                <label class="ability-check-item"><input type="checkbox" value="公民意识"> 公民意识</label>
+                <label class="ability-check-item"><input type="checkbox" value="人文关怀"> 人文关怀</label>
+                <label class="ability-check-item"><input type="checkbox" value="坚毅"> 坚毅</label>
+                <label class="ability-check-item"><input type="checkbox" value="冒险精神"> 冒险精神</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">与学校教育的差异化 <span class="required">*</span></label>
+            <p class="form-hint">这门课能培养什么学校里培养不了的能力？</p>
+            <textarea class="form-textarea" id="t-diff" required placeholder="简要说明选题与学校已有课程的差异，为什么孩子在学校学不到这些"></textarea>
+          </div>
+        </div>
+
+        <!-- Section 3: Self-check -->
+        <div class="form-card">
+          <div class="form-card-title"><span class="card-icon icon-check">✅</span> 选题自检清单</div>
+          <p class="form-hint" style="margin-bottom:16px">逐项检查你的选题是否符合星与土的课程标准，诚实作答</p>
+
+          <div class="selfcheck-progress">
+            <div class="selfcheck-bar"><div class="selfcheck-fill" id="sc-fill"></div></div>
+            <span class="selfcheck-count" id="sc-count">0 / 8 项已确认</span>
+          </div>
+
+          <div class="selfcheck-group">
+            <label class="selfcheck-item">
+              <input type="checkbox" class="sc-check" data-key="q1">
+              <span class="selfcheck-mark">✓</span>
+              <span class="selfcheck-text">选题能链接到<strong>真实世界</strong>的问题或情境，不是凭空想象的</span>
+            </label>
+            <label class="selfcheck-item">
+              <input type="checkbox" class="sc-check" data-key="q2">
+              <span class="selfcheck-mark">✓</span>
+              <span class="selfcheck-text">驱动问题具有<strong>开放性</strong>，没有唯一正确答案</span>
+            </label>
+            <label class="selfcheck-item">
+              <input type="checkbox" class="sc-check" data-key="q3">
+              <span class="selfcheck-mark">✓</span>
+              <span class="selfcheck-text">选题允许学生<strong>动手实践</strong>和<strong>自主探索</strong>，不是纯讲授</span>
+            </label>
+            <label class="selfcheck-item">
+              <input type="checkbox" class="sc-check" data-key="q4">
+              <span class="selfcheck-mark">✓</span>
+              <span class="selfcheck-text">选题内容与<strong>学校已有课程</strong>有明确差异，不是重复学校教学</span>
+            </label>
+            <label class="selfcheck-item">
+              <input type="checkbox" class="sc-check" data-key="q5">
+              <span class="selfcheck-mark">✓</span>
+              <span class="selfcheck-text">选题可对齐至少 1 项<strong>关键能力</strong>或<strong>思维精神</strong></span>
+            </label>
+            <label class="selfcheck-item">
+              <input type="checkbox" class="sc-check" data-key="q6">
+              <span class="selfcheck-mark">✓</span>
+              <span class="selfcheck-text">选题<strong>适合目标年龄段</strong>的认知水平和活动形式</span>
+            </label>
+            <label class="selfcheck-item">
+              <input type="checkbox" class="sc-check" data-key="q7">
+              <span class="selfcheck-mark">✓</span>
+              <span class="selfcheck-text">选题能设计出让学生<strong>走出舒适区</strong>的挑战环节</span>
+            </label>
+            <label class="selfcheck-item">
+              <input type="checkbox" class="sc-check" data-key="q8">
+              <span class="selfcheck-mark">✓</span>
+              <span class="selfcheck-text">选题支持<strong>小组协作</strong>和<strong>表达展示</strong>环节</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <div class="submit-area">
+          <button type="submit" class="btn-submit" id="btn-submit" disabled>提交选题评审</button>
+          <p class="submit-hint">请填写所有必填项后提交</p>
+        </div>
+      </form>
+    </div>
+
+    <!-- ===== Tab 2: Topic List ===== -->
+    <div class="topic-panel" id="panel-list">
+      <div id="topic-list" class="course-list">
+        <!-- Dynamically rendered -->
+      </div>
+    </div>
+  </main>
+
+  <div class="identity-modal-overlay" id="identity-modal" style="display:none">
+    <div class="identity-modal">
+      <div class="identity-modal-icon">🔐</div>
+      <h3 id="identity-modal-title">登录 / 注册</h3>
+      <p id="identity-modal-desc">请输入姓名和密码</p>
+      <input type="text" class="form-input" id="identity-name" placeholder="你的姓名" autocomplete="username" style="margin:12px 0 8px;text-align:center">
+      <input type="password" class="form-input" id="identity-password" placeholder="设置密码（首次为注册）" autocomplete="current-password" style="margin:0 0 8px;text-align:center">
+      <div style="display:flex;gap:8px">
+        <select class="form-select" id="identity-role" style="flex:1">
+          <option value="teacher">教师</option>
+          <option value="ops">运营</option>
+          <option value="admin">管理</option>
+        </select>
+      </div>
+      <div id="admin-key-wrap" style="display:none;margin-top:8px"><input type="password" class="form-input" id="admin-key" placeholder="请输入管理员密钥" style="text-align:center"></div>
+      <div id="invite-code-wrap" style="display:none;margin-top:8px"><input type="text" class="form-input" id="invite-code" placeholder="请输入机构邀请码" style="text-align:center"></div>
+      <div id="identity-error" style="color:#e17055;font-size:0.8rem;margin-top:8px;min-height:20px"></div>
+      <button class="btn-submit" id="identity-confirm" style="margin-top:8px;width:100%" disabled>登录 / 注册</button>
+      <p id="identity-hint" style="font-size:0.72rem;color:var(--text-muted);margin-top:10px">首次输入姓名将自动注册，再次登录需输入正确密码</p>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-client.js"></script>
+  <script src="user-identity.js"></script>
+  <script src="topic-review.js"></script>
+</body>
+</html>

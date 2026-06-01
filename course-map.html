@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>课程全景图 · 星与土</title>
+  <meta name="description" content="星与土课程全景图，以矩阵形式展示所有年龄段×板块的课程分布">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="course-common.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="page-header">
+    <a href="index.html" class="nav-logo"><span class="nav-logo-mascots"><img src="assets/star-mascot.png" alt="星星"><img src="assets/earth-mascot.png" alt="土土"></span>
+      <span class="logo-star">星</span><span class="logo-amp">与</span><span class="logo-earth">土</span>
+    </a>
+    <div class="nav-links">
+      <div class="nav-group">
+        <button class="nav-group-trigger">📖 课程开发</button>
+        <div class="nav-dropdown">
+          <a href="index.html" class="nav-dropdown-item">开发指南</a>
+          <a href="course-submit.html" class="nav-dropdown-item">提交课程</a>
+          <a href="ai-generator.html" class="nav-dropdown-item">AI 助手</a>
+        </div>
+      </div>
+      <div class="nav-group">
+        <button class="nav-group-trigger">📋 评审管理</button>
+        <div class="nav-dropdown">
+          <a href="topic-review.html" class="nav-dropdown-item">选题评审</a>
+          <a href="course-review.html" class="nav-dropdown-item">课程评审</a>
+        </div>
+      </div>
+      <div class="nav-group has-active">
+        <button class="nav-group-trigger">📊 资源中心</button>
+        <div class="nav-dropdown">
+          <a href="pbl-cases.html" class="nav-dropdown-item">案例库</a>
+          <a href="course-map.html" class="nav-dropdown-item active">全景图</a>
+        </div>
+      </div>
+      <div class="nav-group">
+        <button class="nav-group-trigger">🚀 运营工具</button>
+        <div class="nav-dropdown">
+          <a href="ai-marketing.html" class="nav-dropdown-item">AI 内容生成</a>
+          <a href="ops-dashboard.html" class="nav-dropdown-item">运营看板</a>
+        </div>
+      </div>
+      <div class="nav-group">
+        <button class="nav-group-trigger">⚙️ 管理</button>
+        <div class="nav-dropdown">
+          <a href="admin-dashboard.html" class="nav-dropdown-item">管理后台</a>
+        </div>
+      </div>
+      <div class="nav-user">
+        <button class="nav-user-btn" id="nav-user-btn" onclick="window.__switchUser && window.__switchUser()">
+          <span class="nav-user-avatar" id="nav-user-avatar">?</span>
+          <span id="nav-user-name">未登录</span>
+        </button>
+      </div>
+      <button id="theme-toggle" aria-label="切换主题" style="background:none;border:none;color:var(--text-secondary);cursor:pointer;padding:6px;">
+        <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="2"/><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></g></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="page-main" style="max-width:1200px">
+    <h1 class="page-title">🗺️ 课程全景图</h1>
+    <p class="page-desc">以年龄段 × 板块的矩阵展示所有已提交课程的分布，一眼看清课程覆盖情况</p>
+
+    <!-- Stats Bar -->
+    <div class="map-stats" id="map-stats">
+      <!-- Rendered by JS -->
+    </div>
+
+    <!-- Matrix Grid -->
+    <div class="map-matrix" id="map-matrix">
+      <!-- Rendered by JS -->
+    </div>
+
+    <!-- Legend -->
+    <div class="map-legend">
+      <span class="map-legend-item"><span class="legend-dot legend-filled"></span> 已有课程</span>
+      <span class="map-legend-item"><span class="legend-dot legend-empty"></span> 待开发</span>
+      <span class="map-legend-item"><span class="legend-dot legend-pass"></span> 已通过评审</span>
+    </div>
+
+    <!-- Course Detail Panel (below matrix) -->
+    <div class="map-detail-panel" id="map-detail" style="display:none">
+      <div class="map-detail-header">
+        <h3 id="map-detail-title"></h3>
+        <button class="map-detail-close" onclick="window.__closeDetail()">✕</button>
+      </div>
+      <div class="map-detail-courses" id="map-detail-courses"></div>
+    </div>
+  </main>
+
+  <div class="toast" id="toast"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-client.js"></script>
+  <script src="user-identity.js"></script>
+  <script src="course-map.js"></script>
+</body>
+</html>

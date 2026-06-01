@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>管理后台 · 星与土</title>
+  <meta name="description" content="星与土管理后台 - 课程统计、评审概览、工作量设置">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="course-common.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+  <style>
+    .dash-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+    .dash-card { background: var(--surface, rgba(255,255,255,0.04)); border: 1px solid var(--border); border-radius: 16px; padding: 20px; }
+    .dash-card h3 { font-family: var(--font-sans); font-size: 0.92rem; font-weight: 700; margin-bottom: 14px; color: var(--text); }
+    .dash-card canvas { width: 100% !important; max-height: 280px; }
+    .dash-full { grid-column: 1 / -1; }
+    .stat-row { display: flex; gap: 14px; margin-bottom: 20px; flex-wrap: wrap; }
+    .stat-box { flex: 1; min-width: 140px; background: var(--surface, rgba(255,255,255,0.04)); border: 1px solid var(--border); border-radius: 14px; padding: 16px; text-align: center; }
+    .stat-num { font-size: 1.6rem; font-weight: 900; font-family: var(--font-serif); color: var(--accent-brand); }
+    .stat-label { font-size: 0.75rem; color: var(--text-muted); margin-top: 4px; }
+    .wl-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+    .wl-table th { text-align: left; padding: 8px 10px; border-bottom: 2px solid var(--border); color: var(--text-secondary); font-weight: 600; }
+    .wl-table td { padding: 8px 10px; border-bottom: 1px solid var(--border); color: var(--text); }
+    .wl-table input { width: 60px; padding: 4px 8px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--text); font-size: 0.8rem; text-align: center; }
+    .wl-save { margin-top: 12px; padding: 8px 20px; border: none; border-radius: 8px; background: linear-gradient(135deg, var(--accent-brand), #6366f1); color: #fff; font-size: 0.82rem; font-weight: 600; cursor: pointer; }
+    .role-badge { display: inline-block; padding: 2px 8px; border-radius: 6px; font-size: 0.7rem; font-weight: 600; }
+    .role-teacher { background: rgba(99,102,241,0.12); color: #6366f1; }
+    .role-ops { background: rgba(245,158,11,0.12); color: #f59e0b; }
+    .role-admin { background: rgba(239,68,68,0.12); color: #ef4444; }
+    .access-denied { text-align: center; padding: 80px 20px; }
+    .access-denied h2 { font-family: var(--font-serif); font-size: 1.4rem; margin-bottom: 12px; color: var(--text); }
+    .access-denied p { color: var(--text-secondary); font-size: 0.9rem; }
+    .act-btn { padding: 3px 10px; border-radius: 6px; border: 1px solid var(--border,#444); background: none; cursor: pointer; font-size: 0.7rem; transition: all .2s; }
+    .act-btn:hover { opacity: 0.8; }
+    .act-ban { color: #f59e0b; border-color: rgba(245,158,11,0.3); }
+    .act-unban { color: #10b981; border-color: rgba(16,185,129,0.3); }
+    .act-del { color: #ef4444; border-color: rgba(239,68,68,0.3); }
+    .act-role { padding: 3px 6px; border-radius: 6px; border: 1px solid var(--border,#444); background: var(--bg); color: var(--text); font-size: 0.72rem; cursor: pointer; }
+    .banned-row { opacity: 0.5; }
+    .banned-badge { display: inline-block; padding: 1px 6px; border-radius: 4px; font-size: 0.65rem; background: rgba(239,68,68,0.15); color: #ef4444; margin-left: 4px; }
+    .security-card { background: linear-gradient(135deg, rgba(99,102,241,0.05), rgba(239,68,68,0.05)); }
+    .security-input { width: 200px; padding: 6px 12px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); font-size: 0.82rem; }
+    @media (max-width: 768px) { .dash-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header class="page-header">
+    <a href="index.html" class="nav-logo"><span class="nav-logo-mascots"><img src="assets/star-mascot.png" alt="星星"><img src="assets/earth-mascot.png" alt="土土"></span>
+      <span class="logo-star">星</span><span class="logo-amp">与</span><span class="logo-earth">土</span>
+    </a>
+    <div class="nav-links">
+      <div class="nav-group"><button class="nav-group-trigger">📖 课程开发</button><div class="nav-dropdown"><a href="index.html" class="nav-dropdown-item">开发指南</a><a href="course-submit.html" class="nav-dropdown-item">提交课程</a><a href="ai-generator.html" class="nav-dropdown-item">AI 助手</a></div></div>
+      <div class="nav-group"><button class="nav-group-trigger">📋 评审管理</button><div class="nav-dropdown"><a href="topic-review.html" class="nav-dropdown-item">选题评审</a><a href="course-review.html" class="nav-dropdown-item">课程评审</a></div></div>
+      <div class="nav-group"><button class="nav-group-trigger">📊 资源中心</button><div class="nav-dropdown"><a href="pbl-cases.html" class="nav-dropdown-item">案例库</a><a href="course-map.html" class="nav-dropdown-item">全景图</a></div></div>
+      <div class="nav-group"><button class="nav-group-trigger">🚀 运营工具</button><div class="nav-dropdown"><a href="ai-marketing.html" class="nav-dropdown-item">AI 内容生成</a><a href="ops-dashboard.html" class="nav-dropdown-item">运营看板</a></div></div>
+      <div class="nav-group has-active"><button class="nav-group-trigger">⚙️ 管理</button><div class="nav-dropdown"><a href="admin-dashboard.html" class="nav-dropdown-item active">管理后台</a></div></div>
+      <div class="nav-user"><button class="nav-user-btn" id="nav-user-btn" onclick="window.__switchUser && window.__switchUser()"><span class="nav-user-avatar" id="nav-user-avatar">?</span><span id="nav-user-name">未登录</span></button></div>
+      <button id="theme-toggle" aria-label="切换主题" style="background:none;border:none;color:var(--text-secondary);cursor:pointer;padding:6px;"><svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="2"/><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></g></svg><svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    </div>
+  </header>
+
+  <main class="page-main" id="main-content">
+    <!-- Access check happens in JS -->
+  </main>
+
+  <!-- Identity Modal -->
+  <div class="identity-modal-overlay" id="identity-modal" style="display:none">
+    <div class="identity-modal">
+      <div class="identity-modal-icon">🔐</div>
+      <h3 id="identity-modal-title">登录 / 注册</h3>
+      <p id="identity-modal-desc">请输入姓名和密码</p>
+      <input type="text" class="form-input" id="identity-name" placeholder="你的姓名" autocomplete="username" style="margin:12px 0 8px;text-align:center">
+      <input type="password" class="form-input" id="identity-password" placeholder="设置密码（首次为注册）" autocomplete="current-password" style="margin:0 0 8px;text-align:center">
+      <div style="display:flex;gap:8px">
+        <select class="form-select" id="identity-role" style="flex:1">
+          <option value="teacher">教师</option>
+          <option value="ops">运营</option>
+          <option value="admin">管理</option>
+        </select>
+      </div>
+      <div id="admin-key-wrap" style="display:none;margin-top:8px"><input type="password" class="form-input" id="admin-key" placeholder="请输入管理员密钥" style="text-align:center"></div>
+      <div id="invite-code-wrap" style="display:none;margin-top:8px"><input type="text" class="form-input" id="invite-code" placeholder="请输入机构邀请码" style="text-align:center"></div>
+      <div id="identity-error" style="color:#e17055;font-size:0.8rem;margin-top:8px;min-height:20px"></div>
+      <button class="btn-submit" id="identity-confirm" style="margin-top:8px;width:100%" disabled>登录 / 注册</button>
+      <p id="identity-hint" style="font-size:0.72rem;color:var(--text-muted);margin-top:10px">首次输入姓名将自动注册，再次登录需输入正确密码</p>
+    </div>
+  </div>
+  <div class="toast" id="toast"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-client.js?v=starearth_crm"></script>
+  <script src="user-identity.js?v=starearth_crm"></script>
+  <script>
+    // Theme
+    const themeBtn = document.getElementById('theme-toggle');
+    const saved = localStorage.getItem('se-theme');
+    if (saved === 'light') document.documentElement.setAttribute('data-theme', 'light');
+    themeBtn?.addEventListener('click', () => {
+      const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      document.documentElement.setAttribute('data-theme', isLight ? '' : 'light');
+      localStorage.setItem('se-theme', isLight ? 'dark' : 'light');
+    });
+
+    // Wait for identity init, then check access
+    setTimeout(() => {
+      const identity = window.StarEarthIdentity?.getSavedIdentity();
+      if (!identity || identity.role !== 'admin') {
+        document.getElementById('main-content').innerHTML = `
+          <div class="access-denied">
+            <div style="font-size:3rem;margin-bottom:16px">🔒</div>
+            <h2>管理员专属页面</h2>
+            <p>此页面仅限管理员访问。请使用管理员账号登录。</p>
+            <button onclick="window.__switchUser()" style="margin-top:20px;padding:10px 24px;border:none;border-radius:10px;background:var(--accent-brand);color:#fff;cursor:pointer;font-weight:600">切换账号</button>
+          </div>`;
+        return;
+      }
+      renderDashboard();
+    }, 300);
+
+    async function renderDashboard() {
+      // Try cloud first, fall back to localStorage
+      let courses, cases, users, topics, workloads;
+
+      if (window.StarEarthDB && window.StarEarthDB.isSupabaseReady()) {
+        try {
+          [courses, cases, users, topics] = await Promise.all([
+            window.StarEarthDB.getCourses().catch(() => JSON.parse(localStorage.getItem('se-courses') || '[]')),
+            window.StarEarthDB.getCases().catch(() => JSON.parse(localStorage.getItem('se-pbl-cases') || '[]')),
+            window.StarEarthDB.getAllUsers().catch(() => JSON.parse(localStorage.getItem('se-registered-users') || '[]')),
+            window.StarEarthDB.getTopics().catch(() => JSON.parse(localStorage.getItem('se-topics') || '[]')),
+          ]);
+        } catch (e) {
+          console.warn('Cloud fetch failed, using localStorage:', e);
+          courses = JSON.parse(localStorage.getItem('se-courses') || '[]');
+          cases = JSON.parse(localStorage.getItem('se-pbl-cases') || '[]');
+          users = JSON.parse(localStorage.getItem('se-registered-users') || '[]');
+          topics = JSON.parse(localStorage.getItem('se-topics') || '[]');
+        }
+      } else {
+        courses = JSON.parse(localStorage.getItem('se-courses') || '[]');
+        cases = JSON.parse(localStorage.getItem('se-pbl-cases') || '[]');
+        users = JSON.parse(localStorage.getItem('se-registered-users') || '[]');
+        topics = JSON.parse(localStorage.getItem('se-topics') || '[]');
+      }
+
+      if (window.StarEarthDB && window.StarEarthDB.isSupabaseReady()) {
+        try {
+          const settings = await window.StarEarthDB.getSettings();
+          if (settings.workloads) {
+            workloads = settings.workloads;
+            localStorage.setItem('se-workloads', JSON.stringify(workloads));
+          } else {
+            workloads = JSON.parse(localStorage.getItem('se-workloads') || '{}');
+          }
+        } catch (e) {
+          workloads = JSON.parse(localStorage.getItem('se-workloads') || '{}');
+        }
+      } else {
+        workloads = JSON.parse(localStorage.getItem('se-workloads') || '{}');
+      }
+
+      // Normalize user data (cloud users have different field names)
+      users = (users || []).map(u => ({
+        name: u.name,
+        role: u.role || 'teacher',
+        banned: u.banned === true,
+        createdAt: u.createdAt || u.created_at || new Date().toISOString(),
+      }));
+
+      const currentUserName = window.StarEarthIdentity?.getSavedIdentity()?.name || '';
+
+      const totalCourses = courses.length;
+      const totalCases = cases.length;
+      const totalUsers = users.length;
+      const teachers = users.filter(u => u.role === 'teacher');
+      const opsStaff = users.filter(u => u.role === 'ops');
+
+      const cloudBadge = (window.StarEarthDB && window.StarEarthDB.isSupabaseReady())
+        ? '<span style="font-size:0.7rem;padding:2px 8px;border-radius:6px;background:rgba(16,185,129,0.12);color:#10b981;margin-left:8px">☁️ 云端同步</span>'
+        : '<span style="font-size:0.7rem;padding:2px 8px;border-radius:6px;background:rgba(245,158,11,0.12);color:#f59e0b;margin-left:8px">💾 本地模式</span>';
+
+      document.getElementById('main-content').innerHTML = `
+        <h1 class="page-title">⚙️ 管理后台 ${cloudBadge}</h1>
+        <p class="page-desc">课程数据概览、评审分析、团队工作量管理</p>
+
+        <div class="stat-row">
+          <div class="stat-box"><div class="stat-num">${totalCourses}</div><div class="stat-label">已提交课程</div></div>
+          <div class="stat-box"><div class="stat-num">${totalCases}</div><div class="stat-label">PBL 案例</div></div>
+          <div class="stat-box"><div class="stat-num">${totalUsers}</div><div class="stat-label">注册用户</div></div>
+          <div class="stat-box"><div class="stat-num">${teachers.length}</div><div class="stat-label">教师人数</div></div>
+          <div class="stat-box"><div class="stat-num">${opsStaff.length}</div><div class="stat-label">运营人数</div></div>
+        </div>
+
+        <div class="dash-grid">
+          <div class="dash-card">
+            <h3>📊 教师课程提交统计</h3>
+            <canvas id="chart-teacher-courses"></canvas>
+          </div>
+          <div class="dash-card">
+            <h3>📈 课程评审得分概览</h3>
+            <canvas id="chart-review-scores"></canvas>
+          </div>
+          <div class="dash-card">
+            <h3>📦 板块课程分布</h3>
+            <canvas id="chart-module-dist"></canvas>
+          </div>
+          <div class="dash-card">
+            <h3>📅 月度课程提交趋势</h3>
+            <canvas id="chart-monthly-trend"></canvas>
+          </div>
+          <div class="dash-card dash-full">
+            <h3>📊 团队 KPI 目标管理</h3>
+            <div id="kpi-panel"></div>
+            <button class="wl-save" onclick="saveWorkloads()" style="margin-top:16px">💾 保存 KPI 设置</button>
+          </div>
+          <div class="dash-card dash-full">
+            <h3>📋 用户管理</h3>
+            <table class="wl-table">
+              <thead><tr><th>姓名</th><th>角色</th><th>状态</th><th>注册时间</th><th>操作</th></tr></thead>
+              <tbody id="user-mgmt-body"></tbody>
+            </table>
+          </div>
+          <div class="dash-card dash-full security-card">
+            <h3>🔒 安全设置</h3>
+            <div style="display:flex;flex-direction:column;gap:16px">
+              <div>
+                <label style="font-size:0.82rem;color:var(--text-secondary);display:block;margin-bottom:6px">注册邀请码 <span style="font-size:0.7rem;color:var(--text-muted)">（新用户注册时需要输入此码）</span></label>
+                <div style="display:flex;gap:8px;align-items:center">
+                  <input type="text" class="security-input" id="invite-code-input" placeholder="加载中...">
+                  <button class="wl-save" onclick="window.__saveInviteCode()" style="margin-top:0">保存</button>
+                </div>
+              </div>
+              <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.6">
+                💡 <strong>安全提示：</strong><br>
+                • 定期更换邀请码，防止离职人员分享给外部人员<br>
+                • 及时禁用离职人员账号<br>
+                • 删除用户会同时删除其所有课程、案例、选题数据
+              </div>
+            </div>
+          </div>
+        </div>`;
+
+      renderCharts(courses, cases, teachers, opsStaff, workloads);
+      renderWorkloadTable(teachers, opsStaff, courses, cases, workloads, topics);
+      renderUserMgmtTable(users, currentUserName);
+
+      // Load invite code
+      if (window.StarEarthDB && window.StarEarthDB.isSupabaseReady()) {
+        window.StarEarthDB.getInviteCode().then(code => {
+          const input = document.getElementById('invite-code-input');
+          if (input) input.value = code;
+        });
+      }
+    }
+
+    function renderUserMgmtTable(users, currentUserName) {
+      const tbody = document.getElementById('user-mgmt-body');
+      if (!tbody) return;
+      if (users.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--text-muted)">暂无注册用户</td></tr>';
+        return;
+      }
+      tbody.innerHTML = users.map(function(u) {
+        var isSelf = u.name === currentUserName;
+        var isBanned = u.banned === true;
+        var rc = u.role === 'admin' ? 'role-admin' : u.role === 'ops' ? 'role-ops' : 'role-teacher';
+        var rl = u.role === 'admin' ? '管理' : u.role === 'ops' ? '运营' : '教师';
+        var statusText = isBanned ? '<span class="banned-badge">🚫 已禁用</span>' : '<span style="color:#10b981;font-size:0.72rem">✅ 正常</span>';
+        var rowClass = isBanned ? 'banned-row' : '';
+        var escapedName = esc(u.name).replace(/'/g, "\\'");
+
+        var actions;
+        if (isSelf) {
+          actions = '<span style="font-size:0.7rem;color:var(--text-muted)">当前登录</span>';
+        } else {
+          var selTeacher = u.role === 'teacher' ? ' selected' : '';
+          var selOps = u.role === 'ops' ? ' selected' : '';
+          var selAdmin = u.role === 'admin' ? ' selected' : '';
+          var banClass = isBanned ? 'act-unban' : 'act-ban';
+          var banText = isBanned ? '解禁' : '禁用';
+          actions = '<div style="display:flex;gap:6px;flex-wrap:wrap">'
+            + '<select class="act-role" onchange="window.__changeRole(\'' + escapedName + '\', this.value)">'
+            + '<option value="teacher"' + selTeacher + '>教师</option>'
+            + '<option value="ops"' + selOps + '>运营</option>'
+            + '<option value="admin"' + selAdmin + '>管理</option>'
+            + '</select>'
+            + '<button class="act-btn ' + banClass + '" onclick="window.__toggleBan(\'' + escapedName + '\', ' + (!isBanned) + ')">' + banText + '</button>'
+            + '<button class="act-btn act-del" onclick="window.__deleteUser(\'' + escapedName + '\')">删除</button>'
+            + '</div>';
+        }
+
+        return '<tr class="' + rowClass + '">'
+          + '<td>' + esc(u.name) + (isSelf ? ' 👤' : '') + '</td>'
+          + '<td><span class="role-badge ' + rc + '">' + rl + '</span></td>'
+          + '<td>' + statusText + '</td>'
+          + '<td>' + new Date(u.createdAt).toLocaleDateString('zh-CN') + '</td>'
+          + '<td>' + actions + '</td>'
+          + '</tr>';
+      }).join('');
+    }
+
+    function renderCharts(courses, cases, teachers, opsStaff, workloads) {
+      const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+      const textColor = isDark ? '#c4c4d4' : '#333';
+      const gridColor = isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)';
+      Chart.defaults.color = textColor;
+      Chart.defaults.borderColor = gridColor;
+
+      // 1. Teacher course stats
+      const teacherNames = [...new Set([...courses.map(c => c.teacher || '未知'), ...cases.map(c => c.teacher || '未知')])];
+      const coursesByTeacher = teacherNames.map(t => courses.filter(c => c.teacher === t).length);
+      const casesByTeacher = teacherNames.map(t => cases.filter(c => c.teacher === t).length);
+
+      new Chart(document.getElementById('chart-teacher-courses'), {
+        type: 'bar',
+        data: {
+          labels: teacherNames.length > 0 ? teacherNames : ['暂无数据'],
+          datasets: [
+            { label: '课程', data: coursesByTeacher.length > 0 ? coursesByTeacher : [0], backgroundColor: 'rgba(99,102,241,0.7)', borderRadius: 6 },
+            { label: '案例', data: casesByTeacher.length > 0 ? casesByTeacher : [0], backgroundColor: 'rgba(245,158,11,0.7)', borderRadius: 6 }
+          ]
+        },
+        options: { responsive: true, plugins: { legend: { position: 'top' } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
+      });
+
+      // 2. Review scores
+      const dims = ['教育目标', 'PBL方法论', '教育原则', '年龄适配', '教案完整'];
+      const dimKeys = ['d1', 'd2', 'd3', 'd4', 'd5'];
+      const gradeVal = { A: 3, B: 2, C: 1 };
+      const avgScores = dimKeys.map((key, i) => {
+        let total = 0, count = 0;
+        courses.forEach(c => {
+          if (c.reviews && Array.isArray(c.reviews)) {
+            c.reviews.forEach(r => {
+              if (r.scores && r.scores[key]) { total += gradeVal[r.scores[key]] || 0; count++; }
+            });
+          }
+        });
+        return count > 0 ? (total / count).toFixed(2) : 0;
+      });
+
+      new Chart(document.getElementById('chart-review-scores'), {
+        type: 'radar',
+        data: {
+          labels: dims,
+          datasets: [{ label: '平均得分', data: avgScores, backgroundColor: 'rgba(99,102,241,0.15)', borderColor: 'rgba(99,102,241,0.8)', pointBackgroundColor: '#6366f1', borderWidth: 2 }]
+        },
+        options: { responsive: true, scales: { r: { min: 0, max: 3, ticks: { stepSize: 1 } } }, plugins: { legend: { display: false } } }
+      });
+
+      // 3. Module distribution
+      const moduleMap = {};
+      courses.forEach(c => { const m = c.module || '未分类'; moduleMap[m] = (moduleMap[m] || 0) + 1; });
+      cases.forEach(c => { const m = c.theme || '未分类'; moduleMap[m] = (moduleMap[m] || 0) + 1; });
+      const moduleLabels = Object.keys(moduleMap).length > 0 ? Object.keys(moduleMap) : ['暂无'];
+      const moduleData = Object.values(moduleMap).length > 0 ? Object.values(moduleMap) : [0];
+
+      new Chart(document.getElementById('chart-module-dist'), {
+        type: 'doughnut',
+        data: {
+          labels: moduleLabels,
+          datasets: [{ data: moduleData, backgroundColor: ['#6366f1', '#f59e0b', '#10b981', '#ef4444', '#8b5cf6', '#ec4899'] }]
+        },
+        options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+      });
+
+      // 4. Monthly trend
+      const monthMap = {};
+      const now = new Date();
+      for (let i = 5; i >= 0; i--) {
+        const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+        const key = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+        monthMap[key] = 0;
+      }
+      courses.forEach(c => {
+        if (c.submittedAt) { const k = c.submittedAt.substring(0, 7); if (monthMap[k] !== undefined) monthMap[k]++; }
+      });
+      cases.forEach(c => {
+        if (c.createdAt) { const k = c.createdAt.substring(0, 7); if (monthMap[k] !== undefined) monthMap[k]++; }
+      });
+
+      new Chart(document.getElementById('chart-monthly-trend'), {
+        type: 'line',
+        data: {
+          labels: Object.keys(monthMap).map(k => k.substring(5) + '月'),
+          datasets: [{ label: '提交数', data: Object.values(monthMap), borderColor: '#6366f1', backgroundColor: 'rgba(99,102,241,0.1)', fill: true, tension: 0.4, pointRadius: 5 }]
+        },
+        options: { responsive: true, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }, plugins: { legend: { display: false } } }
+      });
+    }
+
+    function renderWorkloadTable(teachers, opsStaff, courses, cases, workloads, topics) {
+      const panel = document.getElementById('kpi-panel');
+      if (!panel) return;
+      const all = [...teachers.map(t => ({ ...t, _role: 'teacher' })), ...opsStaff.map(o => ({ ...o, _role: 'ops' }))];
+      if (all.length === 0) {
+        panel.innerHTML = '<div style="text-align:center;color:var(--text-muted);padding:20px">暂无教师或运营人员</div>';
+        return;
+      }
+
+      // KPI dimensions per role
+      var teacherKPIs = [
+        { key: 'topics', label: '选题提交', icon: '💡', defaultTarget: 3 },
+        { key: 'courses', label: '课程开发', icon: '📚', defaultTarget: 2 },
+        { key: 'pbl', label: 'PBL 案例', icon: '🧩', defaultTarget: 1 },
+        { key: 'reviews', label: '课程评审', icon: '📝', defaultTarget: 4 },
+      ];
+      var opsKPIs = [
+        { key: 'ops_reports', label: '运营报告', icon: '📋', defaultTarget: 4 },
+        { key: 'ops_activities', label: '活动策划', icon: '🎯', defaultTarget: 2 },
+        { key: 'ops_marketing', label: '推广素材', icon: '📣', defaultTarget: 3 },
+      ];
+
+      function getActual(user, kpiKey) {
+        switch (kpiKey) {
+          case 'topics': return (topics || []).filter(function(t) { return t.teacher === user.name; }).length;
+          case 'courses': return courses.filter(function(c) { return c.teacher === user.name; }).length;
+          case 'pbl': return cases.filter(function(c) { return c.teacher === user.name; }).length;
+          case 'reviews': return courses.reduce(function(sum, c) { return sum + ((c.reviews || []).filter(function(r) { return r.reviewer === user.name; }).length); }, 0);
+          default: return 0;
+        }
+      }
+
+      function pctBar(actual, target) {
+        var pct = target > 0 ? Math.min(100, Math.round(actual / target * 100)) : 0;
+        var color = pct >= 100 ? '#10b981' : pct >= 50 ? '#f59e0b' : '#ef4444';
+        return '<div style="display:flex;align-items:center;gap:8px">' +
+          '<div style="flex:1;height:6px;border-radius:3px;background:var(--border,#333);overflow:hidden">' +
+          '<div style="width:' + pct + '%;height:100%;border-radius:3px;background:' + color + ';transition:width .3s"></div></div>' +
+          '<span style="font-size:0.72rem;font-weight:700;color:' + color + ';min-width:36px;text-align:right">' + pct + '%</span></div>';
+      }
+
+      var html = '';
+      all.forEach(function(u) {
+        var isTeacher = u._role === 'teacher';
+        var kpis = isTeacher ? teacherKPIs : opsKPIs;
+        var rc = isTeacher ? 'role-teacher' : 'role-ops';
+        var rl = isTeacher ? '教师' : '运营';
+        var userWL = workloads[u.name] || {};
+        if (typeof userWL === 'number') userWL = { courses: userWL }; // migrate old format
+
+        html += '<div style="border:1px solid var(--border,#333);border-radius:12px;padding:16px;margin-bottom:12px;background:var(--surface,rgba(255,255,255,0.02))">';
+        html += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">';
+        html += '<strong style="font-size:0.88rem">' + esc(u.name) + '</strong>';
+        html += '<span class="role-badge ' + rc + '">' + rl + '</span>';
+        html += '</div>';
+        html += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px">';
+
+        kpis.forEach(function(kpi) {
+          var actual = getActual(u, kpi.key);
+          var target = userWL[kpi.key] || kpi.defaultTarget;
+          var inputName = esc(u.name) + '__' + kpi.key;
+
+          html += '<div style="padding:10px 12px;border-radius:8px;background:var(--bg,#1a1a2e)">';
+          html += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">';
+          html += '<span style="font-size:0.78rem;font-weight:600">' + kpi.icon + ' ' + kpi.label + '</span>';
+          html += '<span style="font-size:0.72rem;color:var(--text-muted)">' + actual + ' / <input type="number" class="wl-input" data-name="' + inputName + '" value="' + target + '" min="0" max="99" style="width:38px"></span>';
+          html += '</div>';
+          html += pctBar(actual, target);
+          html += '</div>';
+        });
+
+        html += '</div></div>';
+      });
+
+      panel.innerHTML = html;
+    }
+
+    async function saveWorkloads() {
+      const inputs = document.querySelectorAll('.wl-input');
+      const workloads = JSON.parse(localStorage.getItem('se-workloads') || '{}');
+      inputs.forEach(function(inp) {
+        var parts = inp.dataset.name.split('__');
+        if (parts.length === 2) {
+          var userName = parts[0];
+          var kpiKey = parts[1];
+          if (!workloads[userName] || typeof workloads[userName] === 'number') workloads[userName] = {};
+          workloads[userName][kpiKey] = parseInt(inp.value) || 0;
+        }
+      });
+      localStorage.setItem('se-workloads', JSON.stringify(workloads));
+      if (window.StarEarthDB && window.StarEarthDB.isSupabaseReady()) {
+        try { await window.StarEarthDB.saveSetting('workloads', workloads); } catch (e) { console.warn('Failed to sync workloads', e); }
+      }
+      showToast('✅ KPI 设置已保存', 'success');
+    }
+
+    function esc(str) { if (!str) return ''; const d = document.createElement('div'); d.textContent = str; return d.innerHTML; }
+    function showToast(msg, type) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg; toast.className = 'toast ' + type;
+      requestAnimationFrame(() => toast.classList.add('show'));
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    // ---- Admin Actions ----
+    window.__changeRole = async function(name, newRole) {
+      if (!window.StarEarthDB) return;
+      showToast('⏳ 正在更改角色...', 'success');
+      const ok = await window.StarEarthDB.updateUserRole(name, newRole);
+      if (ok) {
+        // Also update local users
+        const localUsers = JSON.parse(localStorage.getItem('se-registered-users') || '[]');
+        const idx = localUsers.findIndex(u => u.name === name);
+        if (idx >= 0) { localUsers[idx].role = newRole; localStorage.setItem('se-registered-users', JSON.stringify(localUsers)); }
+        showToast(`✅ ${name} 的角色已改为 ${newRole === 'teacher' ? '教师' : newRole === 'ops' ? '运营' : '管理'}`, 'success');
+        setTimeout(() => renderDashboard(), 500);
+      } else {
+        showToast('❌ 角色更改失败', 'error');
+      }
+    };
+
+    window.__toggleBan = async function(name, shouldBan) {
+      if (!window.StarEarthDB) return;
+      const action = shouldBan ? '禁用' : '解禁';
+      if (!confirm(`确定要${action}用户「${name}」吗？`)) return;
+      showToast(`⏳ 正在${action}...`, 'success');
+      const ok = shouldBan ? await window.StarEarthDB.banUser(name) : await window.StarEarthDB.unbanUser(name);
+      if (ok) {
+        showToast(`✅ ${name} 已${action}`, 'success');
+        setTimeout(() => renderDashboard(), 500);
+      } else {
+        showToast(`❌ ${action}失败`, 'error');
+      }
+    };
+
+    window.__deleteUser = async function(name) {
+      if (!window.StarEarthDB) return;
+      if (!confirm(`⚠️ 确定要删除用户「${name}」吗？\n\n此操作将同时删除该用户的：\n• 所有提交的课程\n• 所有 PBL 案例\n• 所有选题\n• 所有评审记录\n\n此操作不可撤销！`)) return;
+      if (!confirm(`再次确认：永久删除用户「${name}」及其全部数据？`)) return;
+
+      showToast('⏳ 正在删除用户及数据...', 'success');
+      const result = await window.StarEarthDB.deleteUserAndData(name);
+      if (result.success) {
+        // Also remove from local
+        const localUsers = JSON.parse(localStorage.getItem('se-registered-users') || '[]');
+        localStorage.setItem('se-registered-users', JSON.stringify(localUsers.filter(u => u.name !== name)));
+        showToast(`✅ 用户「${name}」及其数据已彻底删除`, 'success');
+        setTimeout(() => renderDashboard(), 500);
+      } else {
+        showToast(`❌ 删除失败: ${result.error}`, 'error');
+      }
+    };
+
+    window.__saveInviteCode = async function() {
+      const input = document.getElementById('invite-code-input');
+      if (!input) return;
+      const code = input.value.trim();
+      if (!code) { showToast('❌ 邀请码不能为空', 'error'); return; }
+      if (code.length < 4) { showToast('❌ 邀请码至少4个字符', 'error'); return; }
+      const ok = await window.StarEarthDB.saveSetting('invite_code', code);
+      if (ok) {
+        showToast('✅ 注册邀请码已更新', 'success');
+      } else {
+        showToast('❌ 保存失败', 'error');
+      }
+    };
+  </script>
+</body>
+</html>

@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>提交课程 · 星与土</title>
+  <meta name="description" content="星与土课程上传模板，按规范提交课程方案并完成自查">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="course-common.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="page-header">
+    <a href="index.html" class="nav-logo"><span class="nav-logo-mascots"><img src="assets/star-mascot.png" alt="星星"><img src="assets/earth-mascot.png" alt="土土"></span>
+      <span class="logo-star">星</span><span class="logo-amp">与</span><span class="logo-earth">土</span>
+    </a>
+    <div class="nav-links">
+      <div class="nav-group has-active">
+        <button class="nav-group-trigger">📖 课程开发</button>
+        <div class="nav-dropdown">
+          <a href="index.html" class="nav-dropdown-item">开发指南</a>
+          <a href="course-submit.html" class="nav-dropdown-item active">提交课程</a>
+          <a href="ai-generator.html" class="nav-dropdown-item">AI 助手</a>
+        </div>
+      </div>
+      <div class="nav-group">
+        <button class="nav-group-trigger">📋 评审管理</button>
+        <div class="nav-dropdown">
+          <a href="topic-review.html" class="nav-dropdown-item">选题评审</a>
+          <a href="course-review.html" class="nav-dropdown-item">课程评审</a>
+        </div>
+      </div>
+      <div class="nav-group">
+        <button class="nav-group-trigger">📊 资源中心</button>
+        <div class="nav-dropdown">
+          <a href="pbl-cases.html" class="nav-dropdown-item">案例库</a>
+          <a href="course-map.html" class="nav-dropdown-item">全景图</a>
+        </div>
+      </div>
+      <div class="nav-group">
+        <button class="nav-group-trigger">🚀 运营工具</button>
+        <div class="nav-dropdown">
+          <a href="ai-marketing.html" class="nav-dropdown-item">AI 内容生成</a>
+          <a href="ops-dashboard.html" class="nav-dropdown-item">运营看板</a>
+        </div>
+      </div>
+      <div class="nav-group">
+        <button class="nav-group-trigger">⚙️ 管理</button>
+        <div class="nav-dropdown">
+          <a href="admin-dashboard.html" class="nav-dropdown-item">管理后台</a>
+        </div>
+      </div>
+      <div class="nav-user">
+        <button class="nav-user-btn" id="nav-user-btn" onclick="window.__switchUser && window.__switchUser()">
+          <span class="nav-user-avatar" id="nav-user-avatar">?</span>
+          <span id="nav-user-name">未登录</span>
+        </button>
+      </div>
+      <button id="theme-toggle" aria-label="切换主题" style="background:none;border:none;color:var(--text-secondary);cursor:pointer;padding:6px;">
+        <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="2"/><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></g></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="page-main">
+    <h1 class="page-title">📋 课程提交模板</h1>
+    <p class="page-desc">按规范填写课程方案，完成自查后提交评审。所有标 <span style="color:var(--accent-2)">*</span> 的字段为必填项。</p>
+
+    <form id="course-form" autocomplete="off">
+      <!-- Section 1: Basic Info -->
+      <div class="form-card">
+        <div class="form-card-title"><span class="card-icon icon-basic">📝</span> 基础信息</div>
+        <div class="form-group">
+          <label class="form-label">课程名称 <span class="required">*</span></label>
+          <input type="text" class="form-input" id="f-name" placeholder="如：从矿石到青铜器" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">所属板块 <span class="required">*</span></label>
+            <select class="form-select" id="f-module" required>
+              <option value="">请选择板块</option>
+              <option value="STEAM">🔬 STEAM · 探索与创造</option>
+              <option value="人文与思辨">📚 人文与思辨 · 自我与社会</option>
+              <option value="玩耍与体育">⚽ 玩耍与体育 · 意志与协作</option>
+              <option value="自然与生活">🌿 自然与生活 · 连接与责任</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">目标年龄段 <span class="required">*</span></label>
+            <select class="form-select" id="f-age" required>
+              <option value="">请选择年龄段</option>
+              <option value="K">K · 启蒙期</option>
+              <option value="G1-G2">G1-G2 · 探索期</option>
+              <option value="G3-G4">G3-G4 · 应用期</option>
+              <option value="G5-G6">G5-G6 · 创新期</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">课程类型 <span class="required">*</span></label>
+            <select class="form-select" id="f-type" required>
+              <option value="">请选择类型</option>
+              <option value="常规课">常规课</option>
+              <option value="营地课">营地课（5天）</option>
+              <option value="户外研学">户外研学</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">总时长 <span class="required">*</span></label>
+            <input type="text" class="form-input" id="f-duration" placeholder="如：3小时 / 5天" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">开发教师 <span class="required">*</span></label>
+          <input type="text" class="form-input" id="f-teacher" placeholder="填写你的姓名" required>
+        </div>
+        <!-- Sports-only basic info fields -->
+        <div id="sport-basic-fields" style="display:none">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">学生人数 <span class="required">*</span></label>
+              <input type="text" class="form-input" id="f-sport-students" placeholder="如：12-16人">
+            </div>
+            <div class="form-group">
+              <label class="form-label">上课日期</label>
+              <input type="date" class="form-input" id="f-sport-date">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">场地 <span class="required">*</span></label>
+            <select class="form-select" id="f-sport-venue">
+              <option value="">请选择场地</option>
+              <option value="室内体育馆">室内体育馆</option>
+              <option value="户外操场">户外操场</option>
+              <option value="草地">草地</option>
+              <option value="游泳池">游泳池</option>
+              <option value="其他">其他</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">器材清单 <span class="required">*</span></label>
+            <p class="form-hint">逐项添加所需器材及数量</p>
+            <div id="sport-equipment-list" class="material-list"></div>
+            <button type="button" class="btn-add-step" id="btn-add-equipment">＋ 添加器材</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== PBL Sections (hidden when sports) ===== -->
+      <div id="pbl-sections">
+      <!-- Section 2: Goals -->
+      <div class="form-card">
+        <div class="form-card-title"><span class="card-icon icon-goal">🎯</span> 教育目标</div>
+        <div class="form-group">
+          <label class="form-label">能力目标 <span class="required">*</span></label>
+          <p class="form-hint">写清楚本课程培养哪些具体能力（请参考「内容框架」中对应年龄段×板块的能力目标）</p>
+          <textarea class="form-textarea" id="f-ability" placeholder="例：&#10;1. 理解简单机械如何改变力的方向（认识机械）&#10;2. 建立闭合回路的基本概念（感知电路）&#10;3. 经历从想法到实物的完整设计搭建过程" required></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">与星与土总目标的对齐说明 <span class="required">*</span></label>
+          <p class="form-hint">说明本课程如何映射到「关键能力 + 思维精神 + 身心健康」三大总目标</p>
+          <textarea class="form-textarea" id="f-alignment" placeholder="例：本课程重点培养「关键能力」中的工程思维和问题解决能力，同时在团队协作中锻炼沟通表达..." required></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">与学校教育的差异化 <span class="required">*</span></label>
+          <p class="form-hint">回答：这门课锻炼了什么学校里锻炼不到的能力？</p>
+          <textarea class="form-textarea" id="f-diff" placeholder="例：学校物理课侧重理论公式记忆，本课程让孩子亲手搭建真实的机械装置，经历失败和迭代..." required></textarea>
+        </div>
+      </div>
+
+      <!-- Section 3: PBL Design -->
+      <div class="form-card">
+        <div class="form-card-title"><span class="card-icon icon-pbl">🧩</span> PBL 设计</div>
+        
+        <!-- Shared: Driving Question -->
+        <div class="form-group">
+          <label class="form-label">驱动问题 <span class="required">*</span></label>
+          <p class="form-hint">真实的、开放性的核心问题，能激发好奇心且没有唯一答案</p>
+          <textarea class="form-textarea" id="f-driving" placeholder="例：为什么博物馆里有那么多青铜器？我们能不能自己炼出铜、做一件青铜器？" required></textarea>
+        </div>
+
+        <!-- Dual-track Toggle -->
+        <div class="dual-track-toggle">
+          <label class="toggle-switch">
+            <input type="checkbox" id="f-dual-track" checked>
+            <span class="toggle-slider"></span>
+          </label>
+          <div class="toggle-text">
+            <span class="toggle-label">双线并行设计</span>
+            <span class="toggle-hint">同一个 PBL 项目中，STEAM 探索线与人文思辨线并行展开，最终汇合</span>
+          </div>
+        </div>
+
+        <!-- ===== Dual Track Mode ===== -->
+        <div id="dual-track-section">
+          <div class="dual-track-header">
+            <div class="track-legend">
+              <span class="track-badge track-badge-steam">🔬 STEAM 探索线</span>
+              <span class="track-connector">⟷</span>
+              <span class="track-badge track-badge-hum">📚 人文思辨线</span>
+            </div>
+            <p class="form-hint" style="text-align:center;margin-top:8px">两条线围绕同一个驱动问题展开，各有侧重，最终在汇合点交融</p>
+          </div>
+
+          <div class="dual-track-columns">
+            <!-- STEAM Track -->
+            <div class="track-column track-steam">
+              <div class="track-column-header"><span class="track-dot steam-dot"></span> STEAM 探索线</div>
+              <div class="form-group">
+                <label class="form-label">探索与知识构建 <span class="required">*</span></label>
+                <p class="form-hint">学生通过什么方式探索科学/技术/工程原理？</p>
+                <textarea class="form-textarea" id="f-steam-knowledge" placeholder="例：观察铜矿石标本，了解古人如何发现铜可以从矿石中提取；拆解一个简单的金属铸件了解浇铸原理..."></textarea>
+              </div>
+              <div class="form-group">
+                <label class="form-label">动手实践 <span class="required">*</span></label>
+                <p class="form-hint">核心制作/实验/测试活动</p>
+                <textarea class="form-textarea" id="f-steam-handson" placeholder="例：&#10;1. 搭建简易炼铜炉（土/砖+风箱）&#10;2. 将碎铜矿石放入炉中冶炼&#10;3. 拉风箱控制温度&#10;4. 制作泥模/石膏模具&#10;5. 将铜液浇入模具铸造器物"></textarea>
+              </div>
+              <div class="form-group">
+                <label class="form-label">方案设计引导</label>
+                <p class="form-hint">如何引导学生自主设计和迭代？</p>
+                <textarea class="form-textarea" id="f-steam-solution" placeholder="例：各组可自选器物形状（武器/工具/装饰品），自行设计模具并测试不同的炉温控制方案..."></textarea>
+              </div>
+            </div>
+
+            <!-- Humanities Track -->
+            <div class="track-column track-hum">
+              <div class="track-column-header"><span class="track-dot hum-dot"></span> 人文思辨线</div>
+              <div class="form-group">
+                <label class="form-label">探究与思辨 <span class="required">*</span></label>
+                <p class="form-hint">围绕主题展开哪些人文/历史/社会层面的探究？</p>
+                <textarea class="form-textarea" id="f-hum-inquiry" placeholder="例：为什么博物馆里有那么多青铜器？青铜器的出现对人类社会产生了什么影响？从石器到青铜器，人类的生活发生了哪些变化？"></textarea>
+              </div>
+              <div class="form-group">
+                <label class="form-label">讨论与表达 <span class="required">*</span></label>
+                <p class="form-hint">设计哪些讨论/辩论/写作/角色扮演活动？</p>
+                <textarea class="form-textarea" id="f-hum-discussion" placeholder="例：&#10;1. 讨论：如果你是古代部落首领，有了青铜器你会先用来做什么？&#10;2. 辩论：青铜器的发明对人类是好事还是坏事？&#10;3. 创作：给你的青铜器写一段历史故事"></textarea>
+              </div>
+              <div class="form-group">
+                <label class="form-label">资源支架</label>
+                <p class="form-hint">提供哪些资料/故事/影像帮助学生建构理解？</p>
+                <textarea class="form-textarea" id="f-hum-resource" placeholder="例：准备三星堆青铜面具的图片和视频；节选《国家宝藏》中后母戊鼎的片段；古代冶金的简易图解..."></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Convergence -->
+          <div class="track-convergence">
+            <div class="convergence-icon">🔄</div>
+            <div class="form-group" style="flex:1">
+              <label class="form-label">双线汇合设计 <span class="required">*</span></label>
+              <p class="form-hint">两条线在哪个环节/时刻交融？学生如何将动手体验与人文思考结合起来？</p>
+              <textarea class="form-textarea" id="f-convergence" placeholder="例：孩子们亲手炼出铜、铸造出自己的青铜器后，在展示会上不仅演示制作过程，还要讲述「我的青铜器的故事」——它是什么时代的？用来做什么的？它的主人经历了什么？将科学发现与人文想象融为一体。"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== Single Track Mode (fallback) ===== -->
+        <div id="single-track-section" style="display:none">
+          <div class="form-group">
+            <label class="form-label">知识构建安排 <span class="required">*</span></label>
+            <p class="form-hint">学生如何自主探索所需知识？教师提供哪些资源支架？</p>
+            <textarea class="form-textarea" id="f-knowledge" placeholder="例：先拆解一个已有的水枪，观察结构；提供关于水压的简单实验材料让孩子自行探索..."></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">方案设计引导</label>
+            <p class="form-hint">如何引导学生设计解决方案？是否允许多种路径？</p>
+            <textarea class="form-textarea" id="f-solution" placeholder="例：每个小组可以自由选择检测方式（颜色变化/电子感应/物理机关），教师不限定方案..."></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">动手实践环节 <span class="required">*</span></label>
+            <p class="form-hint">核心制作/实验/测试活动描述</p>
+            <textarea class="form-textarea" id="f-handson" placeholder="例：用水管、阀门、传感器等材料搭建原型，反复测试并改进..."></textarea>
+          </div>
+        </div>
+
+        <!-- Shared: Reflection  -->
+        <div class="form-group" style="margin-top:20px">
+          <label class="form-label">展示与反思设计 <span class="required">*</span></label>
+          <p class="form-hint">向谁展示成果？如何引导学生进行反思？</p>
+          <textarea class="form-textarea" id="f-reflect" required placeholder="例：各组展示青铜器成品并讲述背后的故事；反思环节讨论：动手制作和了解历史分别带给你什么感受？两者之间有什么联系？"></textarea>
+        </div>
+      </div>
+
+      <!-- Section 4: Teaching Flow -->
+      <div class="form-card">
+        <div class="form-card-title"><span class="card-icon icon-flow">⏱️</span> 详细教学流程</div>
+        <p class="form-hint" style="margin-bottom:14px">按时间顺序添加每个教学环节，包括时长、活动内容和教师话术</p>
+        <div class="timeline-editor" id="timeline-editor">
+          <!-- Dynamic steps added here -->
+        </div>
+        <button type="button" class="btn-add-step" id="btn-add-step">＋ 添加一个教学环节</button>
+      </div>
+
+      <!-- Section 5: Materials -->
+      <div class="form-card">
+        <div class="form-card-title"><span class="card-icon icon-material">📦</span> 材料与安全</div>
+        <div class="form-group">
+          <label class="form-label">所需材料清单 <span class="required">*</span></label>
+          <p class="form-hint">逐项添加所需材料，填写名称和数量规格</p>
+          <div class="material-list" id="material-list">
+            <!-- Dynamic material items added here -->
+          </div>
+          <button type="button" class="btn-add-step" id="btn-add-material">＋ 添加一项材料</button>
+        </div>
+        <div class="form-group">
+          <label class="form-label">安全注意事项</label>
+          <p class="form-hint">特别是涉及工具使用、户外活动、身体对抗的课程</p>
+          <textarea class="form-textarea" id="f-safety" placeholder="例：使用热熔胶枪时需教师在旁指导，低龄段由教师操作胶枪；剪刀使用前讲解安全规范..."></textarea>
+        </div>
+      </div>
+
+      <!-- Section 6: Self-check -->
+      <div class="form-card">
+        <div class="form-card-title"><span class="card-icon icon-check">✅</span> 提交前自查</div>
+        <p class="form-hint" style="margin-bottom:14px">以下所有项全部确认后才能提交。请诚实自查，这将帮助你提升课程质量。</p>
+        
+        <div class="selfcheck-progress">
+          <div class="selfcheck-bar"><div class="selfcheck-fill" id="sc-fill"></div></div>
+          <span class="selfcheck-count" id="sc-count">0 / 21 项已确认</span>
+        </div>
+
+        <div class="selfcheck-group">
+          <h4>🎯 教育目标</h4>
+          <label class="selfcheck-item"><input type="checkbox" class="sc-check"><span class="selfcheck-mark">✓</span><span class="selfcheck-text">我能清晰说出这门课培养孩子的哪些具体能力和素质</span></label>
+          <label class="selfcheck-item"><input type="checkbox" class="sc-check"><span class="selfcheck-mark">✓</span><span class="selfcheck-text">这门课锻炼的能力是学校教育无法充分提供的</span></label>
+          <label class="selfcheck-item"><input type="checkbox" class="sc-check"><span class="selfcheck-mark">✓</span><span class="selfcheck-text">课程不会强化应试思维或标准答案思维</span></label>
+          <label class="selfcheck-item"><input type="checkbox" class="sc-check"><span class="selfcheck-mark">✓</span><span class="selfcheck-text">课程目标与星与土的总目标一致</span></label>
+        </div>
+
+        <div class="selfcheck-group">
+          <h4>📋 PBL 方法论</h4>
+          <label class="selfcheck-item"><input type="checkbox" class="sc-check"><span class="selfcheck-mark">✓</span><span class="selfcheck-text">课程有一个真实的、开放性的驱动问题</span></label>
+          <label class="selfcheck-item"><input type="checkbox" class="sc-check"><span class="selfcheck-mark">✓</span><span class="selfcheck-text">学生自主探索和动手实践的时间 ≥ 70%</span></label>
+          <label class="selfcheck-item"><input type="checkbox" class="sc-check"><span class="selfcheck-mark">✓</span><span class="selfcheck-text">没有给学生完整的操作步骤让其照做</span></label>
+          <label class="selfcheck-item"><input type="checkbox" class="sc-check"><span class="selfcheck-mark">✓</span><span class="selfcheck-text">课程包含展示和反思环节</span></label>
+          <label class="selfcheck-item"><input type="checkbox" class="sc-check"><span class="selfcheck-mark">✓</span><span class="selfcheck-text">允许并鼓励学生产出不同的结果</span></label>
+          <label class="selfcheck-item"><input type="checkbox" class="sc-check"><span class="selfcheck-mark">✓</span><span class="selfcheck-text">若采用双线并行，STEAM线与人文线有清晰的汇合设计</span></label>
+        </div>
+
+        <div class="selfcheck-group">
+          <h4>🌱 教育过程</h4>
+          <label class="selfcheck-item"><input type="checkbox" class="sc-check"><span class="selfcheck-mark">✓</span><span class="selfcheck-text">课程设计尊重学生差异，不要求统一结果</span></label>
+          <label class="selfcheck-item"><input type="checkbox" class="sc-check"><span class="selfcheck-mark">✓</span><span class="selfcheck-text">有专门设计的走出舒适区的挑战环节</span></label>
+          <label class="selfcheck-item"><input type="checkbox" class="sc-check"><span class="selfcheck-mark">✓</span><span class="selfcheck-text">给学生犯错和重新尝试的空间</span></label>
+          <label class="selfcheck-item"><input type="checkbox" class="sc-check"><span class="selfcheck-mark">✓</span><span class="selfcheck-text">没有使用物质奖励或排名来激励学生</span></label>
+        </div>
+
+        <div class="selfcheck-group">
+          <h4>👶 年龄适配</h4>
+          <label class="selfcheck-item"><input type="checkbox" class="sc-check"><span class="selfcheck-mark">✓</span><span class="selfcheck-text">内容难度和活动形式匹配目标年龄段</span></label>
+          <label class="selfcheck-item"><input type="checkbox" class="sc-check"><span class="selfcheck-mark">✓</span><span class="selfcheck-text">有分层挑战设计（基础/进阶/拓展）</span></label>
+          <label class="selfcheck-item"><input type="checkbox" class="sc-check"><span class="selfcheck-mark">✓</span><span class="selfcheck-text">活动时长符合该年龄段的注意力特征</span></label>
+        </div>
+
+        <div class="selfcheck-group">
+          <h4>📝 教案质量</h4>
+          <label class="selfcheck-item"><input type="checkbox" class="sc-check"><span class="selfcheck-mark">✓</span><span class="selfcheck-text">教学流程完整，另一位老师拿到教案可以独立实施</span></label>
+          <label class="selfcheck-item"><input type="checkbox" class="sc-check"><span class="selfcheck-mark">✓</span><span class="selfcheck-text">材料清单完整，包含数量和规格</span></label>
+          <label class="selfcheck-item"><input type="checkbox" class="sc-check"><span class="selfcheck-mark">✓</span><span class="selfcheck-text">关键引导话术和提问已具体写出</span></label>
+          <label class="selfcheck-item"><input type="checkbox" class="sc-check"><span class="selfcheck-mark">✓</span><span class="selfcheck-text">涉及安全事项的课程已列出防护方案</span></label>
+        </div>
+      </div>
+      </div><!-- end #pbl-sections -->
+
+      <!-- ===== Sports Sections (hidden by default) ===== -->
+      <div id="sport-sections" style="display:none">
+
+      <!-- Sport Goals -->
+      <div class="form-card">
+        <div class="form-card-title"><span class="card-icon icon-goal">⚽</span> 课程目标</div>
+        <div class="form-group">
+          <label class="form-label">课程主题 <span class="required">*</span></label>
+          <p class="form-hint">本节课的核心运动主题</p>
+          <input type="text" class="form-input" id="f-sport-theme" placeholder="如：敏捷性训练 — 快速反应与变向移动">
+        </div>
+        <div class="form-group">
+          <label class="form-label">课程目标 <span class="required">*</span></label>
+          <p class="form-hint">从体能、技能、社交、心理等维度描述目标</p>
+          <textarea class="form-textarea" id="f-sport-goals" placeholder="例：&#10;• 体能：提高心肺耐力与爆发力&#10;• 技能：掌握变向跑的基本技术动作&#10;• 社交：学会在团队游戏中沟通配合&#10;• 心理：敢于在对抗中挑战自我"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">专项迁移性</label>
+          <p class="form-hint">如涉及自由玩耍时间，说明练习技能如何迁移到比赛/真实运动场景</p>
+          <textarea class="form-textarea" id="f-sport-transfer" placeholder="如：本课练习的变向移动技术可直接迁移到足球/篮球比赛中的突破过人场景"></textarea>
+        </div>
+      </div>
+
+      <!-- Sport Teaching Flow -->
+      <div class="form-card">
+        <div class="form-card-title"><span class="card-icon icon-flow">⏱️</span> 课程内容（教学流程）</div>
+        <p class="form-hint" style="margin-bottom:14px">按环节添加课程内容，每个环节包含练习/游戏名称、组织形式、指导要点和场地图示</p>
+        <div id="sport-flow-editor">
+          <!-- Dynamic sport phases added here -->
+        </div>
+        <button type="button" class="btn-add-step" id="btn-add-sport-phase">＋ 添加教学环节</button>
+      </div>
+
+      <!-- Sport Safety & Differentiation -->
+      <div class="form-card">
+        <div class="form-card-title"><span class="card-icon icon-material">🛡️</span> 安全与分层设计</div>
+        <div class="form-group">
+          <label class="form-label">安全注意事项 <span class="required">*</span></label>
+          <p class="form-hint">特别关注身体接触、器材使用、场地安全</p>
+          <textarea class="form-textarea" id="f-sport-safety" placeholder="例：&#10;• 热身不充分禁止进入对抗环节&#10;• 标志桶间距 ≥ 1.5m，避免碰撞&#10;• 使用软式器材，减少受伤风险"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">分层难度设计</label>
+          <p class="form-hint">如何针对不同体能/技能水平的学生调整活动？</p>
+          <textarea class="form-textarea" id="f-sport-diff" placeholder="例：&#10;• 基础：走步完成路线&#10;• 进阶：慢跑完成路线&#10;• 挑战：全速冲刺 + 额外障碍"></textarea>
+        </div>
+      </div>
+
+      <!-- Sport Self-check -->
+      <div class="form-card">
+        <div class="form-card-title"><span class="card-icon icon-check">✅</span> 提交前自查</div>
+        <p class="form-hint" style="margin-bottom:14px">以下所有项全部确认后才能提交。</p>
+        <div class="selfcheck-progress">
+          <div class="selfcheck-bar"><div class="selfcheck-fill" id="sc-fill-sport"></div></div>
+          <span class="selfcheck-count" id="sc-count-sport">0 / 14 项已确认</span>
+        </div>
+        <div class="selfcheck-group">
+          <h4>⚽ 运动目标</h4>
+          <label class="selfcheck-item"><input type="checkbox" class="sc-check-sport"><span class="selfcheck-mark">✓</span><span class="selfcheck-text">课程有明确的体能/技能发展目标</span></label>
+          <label class="selfcheck-item"><input type="checkbox" class="sc-check-sport"><span class="selfcheck-mark">✓</span><span class="selfcheck-text">练习内容与年龄段体能水平匹配</span></label>
+          <label class="selfcheck-item"><input type="checkbox" class="sc-check-sport"><span class="selfcheck-mark">✓</span><span class="selfcheck-text">有足够的活动时间（排队等待 ≤ 30%）</span></label>
+        </div>
+        <div class="selfcheck-group">
+          <h4>🎮 课程设计</h4>
+          <label class="selfcheck-item"><input type="checkbox" class="sc-check-sport"><span class="selfcheck-mark">✓</span><span class="selfcheck-text">每个环节都有清晰的游戏/练习名称</span></label>
+          <label class="selfcheck-item"><input type="checkbox" class="sc-check-sport"><span class="selfcheck-mark">✓</span><span class="selfcheck-text">组织形式描述具体，另一位教练可以直接实施</span></label>
+          <label class="selfcheck-item"><input type="checkbox" class="sc-check-sport"><span class="selfcheck-mark">✓</span><span class="selfcheck-text">有分层设计，照顾不同水平的学生</span></label>
+          <label class="selfcheck-item"><input type="checkbox" class="sc-check-sport"><span class="selfcheck-mark">✓</span><span class="selfcheck-text">游戏/练习之间有合理的强度递进</span></label>
+        </div>
+        <div class="selfcheck-group">
+          <h4>🛡️ 安全与保障</h4>
+          <label class="selfcheck-item"><input type="checkbox" class="sc-check-sport"><span class="selfcheck-mark">✓</span><span class="selfcheck-text">有完整的热身和放松环节</span></label>
+          <label class="selfcheck-item"><input type="checkbox" class="sc-check-sport"><span class="selfcheck-mark">✓</span><span class="selfcheck-text">器材使用前已检查安全注意事项</span></label>
+          <label class="selfcheck-item"><input type="checkbox" class="sc-check-sport"><span class="selfcheck-mark">✓</span><span class="selfcheck-text">场地界限和安全区域已清晰规划</span></label>
+        </div>
+        <div class="selfcheck-group">
+          <h4>📝 教案质量</h4>
+          <label class="selfcheck-item"><input type="checkbox" class="sc-check-sport"><span class="selfcheck-mark">✓</span><span class="selfcheck-text">指导要点具体，包含关键教学提示</span></label>
+          <label class="selfcheck-item"><input type="checkbox" class="sc-check-sport"><span class="selfcheck-mark">✓</span><span class="selfcheck-text">器材清单完整，含数量</span></label>
+          <label class="selfcheck-item"><input type="checkbox" class="sc-check-sport"><span class="selfcheck-mark">✓</span><span class="selfcheck-text">有图示或场地布局说明</span></label>
+          <label class="selfcheck-item"><input type="checkbox" class="sc-check-sport"><span class="selfcheck-mark">✓</span><span class="selfcheck-text">时间分配合理，总时长与课程时长一致</span></label>
+        </div>
+      </div>
+
+      </div><!-- end #sport-sections -->
+
+      <!-- Submit -->
+      <div class="submit-area">
+        <button type="submit" class="btn-submit" id="btn-submit" disabled>提交课程方案</button>
+        <p class="submit-hint" id="submit-hint-text">请完成所有必填项和全部自查后提交</p>
+      </div>
+    </form>
+  </main>
+
+  <!-- User Identity Modal -->
+  <div class="identity-modal-overlay" id="identity-modal" style="display:none">
+    <div class="identity-modal">
+      <div class="identity-modal-icon">🔐</div>
+      <h3 id="identity-modal-title">登录 / 注册</h3>
+      <p id="identity-modal-desc">请输入姓名和密码</p>
+      <input type="text" class="form-input" id="identity-name" placeholder="你的姓名" autocomplete="username" style="margin:12px 0 8px;text-align:center">
+      <input type="password" class="form-input" id="identity-password" placeholder="设置密码（首次为注册）" autocomplete="current-password" style="margin:0 0 8px;text-align:center">
+      <div style="display:flex;gap:8px">
+        <select class="form-select" id="identity-role" style="flex:1">
+          <option value="teacher">教师</option>
+          <option value="ops">运营</option>
+          <option value="admin">管理</option>
+        </select>
+      </div>
+      <div id="admin-key-wrap" style="display:none;margin-top:8px"><input type="password" class="form-input" id="admin-key" placeholder="请输入管理员密钥" style="text-align:center"></div>
+      <div id="invite-code-wrap" style="display:none;margin-top:8px"><input type="text" class="form-input" id="invite-code" placeholder="请输入机构邀请码" style="text-align:center"></div>
+      <div id="identity-error" style="color:#e17055;font-size:0.8rem;margin-top:8px;min-height:20px"></div>
+      <button class="btn-submit" id="identity-confirm" style="margin-top:8px;width:100%" disabled>登录 / 注册</button>
+      <p id="identity-hint" style="font-size:0.72rem;color:var(--text-muted);margin-top:10px">首次输入姓名将自动注册，再次登录需输入正确密码</p>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-client.js"></script>
+  <script src="user-identity.js"></script>
+  <script src="course-submit.js"></script>
+</body>
+</html>

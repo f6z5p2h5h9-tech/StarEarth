@@ -1,0 +1,1812 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>星与土 · 课程开发指南与质量评价标准</title>
+  <meta name="description" content="星与土创新教育机构课程开发指南与课程质量评价标准，为课程开发教师提供明确的指引。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="course-common.css">
+</head>
+<body>
+  <!-- Floating Nav -->
+  <header class="page-header" id="main-nav">
+    <a href="index.html" class="nav-logo"><span class="nav-logo-mascots"><img src="assets/star-mascot.png" alt="星星"><img src="assets/earth-mascot.png" alt="土土"></span>
+      <span class="logo-star">星</span><span class="logo-amp">与</span><span class="logo-earth">土</span>
+    </a>
+    <div class="nav-links">
+      <div class="nav-group has-active">
+        <button class="nav-group-trigger">📖 课程开发</button>
+        <div class="nav-dropdown">
+          <a href="index.html" class="nav-dropdown-item active">开发指南</a>
+          <a href="course-submit.html" class="nav-dropdown-item">提交课程</a>
+          <a href="ai-generator.html" class="nav-dropdown-item">AI 助手</a>
+        </div>
+      </div>
+      <div class="nav-group">
+        <button class="nav-group-trigger">📋 评审管理</button>
+        <div class="nav-dropdown">
+          <a href="topic-review.html" class="nav-dropdown-item">选题评审</a>
+          <a href="course-review.html" class="nav-dropdown-item">课程评审</a>
+        </div>
+      </div>
+      <div class="nav-group">
+        <button class="nav-group-trigger">📊 资源中心</button>
+        <div class="nav-dropdown">
+          <a href="pbl-cases.html" class="nav-dropdown-item">案例库</a>
+          <a href="course-map.html" class="nav-dropdown-item">全景图</a>
+        </div>
+      </div>
+      <div class="nav-group">
+        <button class="nav-group-trigger">🚀 运营工具</button>
+        <div class="nav-dropdown">
+          <a href="ai-marketing.html" class="nav-dropdown-item">AI 内容生成</a>
+          <a href="ops-dashboard.html" class="nav-dropdown-item">运营看板</a>
+        </div>
+      </div>
+      <div class="nav-group">
+        <button class="nav-group-trigger">⚙️ 管理</button>
+        <div class="nav-dropdown">
+          <a href="admin-dashboard.html" class="nav-dropdown-item">管理后台</a>
+        </div>
+      </div>
+      <div class="nav-user">
+        <button class="nav-user-btn" id="nav-user-btn" onclick="window.__switchUser && window.__switchUser()">
+          <span class="nav-user-avatar" id="nav-user-avatar">?</span>
+          <span id="nav-user-name">未登录</span>
+        </button>
+      </div>
+      <button id="theme-toggle" aria-label="切换主题">
+        <svg class="icon-sun" viewBox="0 0 24 24" width="20" height="20"><circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="2"/><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></g></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" width="20" height="20"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section id="hero">
+    <div class="hero-bg-particles" id="particles"></div>
+    <div class="hero-content">
+      <p class="hero-subtitle">深圳 · 创新教育</p>
+      <h1 class="hero-title">
+        <span class="title-line"><span class="logo-star">星</span><span class="logo-amp">与</span><span class="logo-earth">土</span></span>
+        <span class="title-line title-sub">课程开发指南</span>
+        <span class="title-line title-sub2">与质量评价标准</span>
+      </h1>
+      <p class="hero-desc">为课程开发教师提供清晰、可操作的指引<br>定义什么是好的课程，什么是不好的课程</p>
+      <div class="hero-tags">
+        <span class="tag">STEAM</span>
+        <span class="tag">人文与思辨</span>
+        <span class="tag">玩耍与体育</span>
+        <span class="tag">自然与生活</span>
+      </div>
+      <a href="#philosophy" class="hero-cta">开始阅读 ↓</a>
+    </div>
+  </section>
+
+  <!-- Philosophy -->
+  <section id="philosophy" class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-number">01</span>
+        <h2>教育理念根基</h2>
+        <p class="section-desc">所有课程设计必须根植于以下核心理念，这是课程的灵魂</p>
+      </div>
+
+      <div class="philosophy-grid">
+        <div class="phil-card phil-main">
+          <div class="phil-icon">🎯</div>
+          <h3>教育总目标</h3>
+          <div class="phil-goals">
+            <div class="goal-item">
+              <span class="goal-label">于个人</span>
+              <span class="goal-text">能够自由的幸福生活</span>
+            </div>
+            <div class="goal-item">
+              <span class="goal-label">于社会</span>
+              <span class="goal-text">能够成为社会进步的推动者</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="phil-card">
+          <div class="phil-icon">🧠</div>
+          <h3>关键能力</h3>
+          <ul class="phil-list">
+            <li><strong>解决问题的能力</strong><span>在已知世界中解决问题</span></li>
+            <li><strong>创造力</strong><span>在未知世界中创新创造</span></li>
+            <li><strong>学习能力</strong><span>在变化世界中持续学习</span></li>
+          </ul>
+        </div>
+
+        <div class="phil-card">
+          <div class="phil-icon">💎</div>
+          <h3>思维与精神</h3>
+          <p class="phil-note">比能力更重要的是思维方式和精神力量</p>
+          <div class="phil-chips">
+            <span class="chip">普世价值观</span><span class="chip">人文关怀</span>
+            <span class="chip">公民意识</span><span class="chip">成长型思维</span>
+            <span class="chip">批判思维</span><span class="chip">全局思维</span>
+            <span class="chip">坚毅</span><span class="chip">抗挫折能力</span>
+            <span class="chip">冒险精神</span>
+          </div>
+        </div>
+
+        <div class="phil-card">
+          <div class="phil-icon">🌱</div>
+          <h3>基础：身心健康</h3>
+          <p>现代社会给心理状态带来前所未有的挑战——信息爆炸、社会压力、信仰缺失、意义感和目标感缺失。同时，缺少运动、久坐、不健康饮食也在侵蚀身体健康。课程必须关注孩子的身心健康基础。</p>
+        </div>
+      </div>
+
+      <!-- Process Principles -->
+      <div class="process-section">
+        <h3 class="process-title">教育过程的三大原则</h3>
+        <div class="process-cards">
+          <div class="proc-card" data-index="1">
+            <div class="proc-number">壹</div>
+            <h4>尊重</h4>
+            <div class="proc-details">
+              <p>教师将学生视做完整、独立的人，学生有充分的自由和自主。</p>
+              <div class="proc-dual">
+                <div class="proc-do">
+                  <span class="proc-label">✓ 这意味着</span>
+                  <p>平等对待每一个学生，尊重并包容差异和个性</p>
+                </div>
+                <div class="proc-dont">
+                  <span class="proc-label">✗ 也意味着</span>
+                  <p>不会过度保护和过度夸奖，必要时坚决引导学生走出舒适区</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="proc-card" data-index="2">
+            <div class="proc-number">贰</div>
+            <h4>自主探索 · 过程大于结果</h4>
+            <div class="proc-details">
+              <p>自主探索和学习的过程比知识结果更重要。每一次尝试、每一次失败都有价值。</p>
+              <p class="proc-highlight">慢即是快——虽然会花费更长的时间，但学生会更加自信，能够更好地独立解决问题。</p>
+            </div>
+          </div>
+
+          <div class="proc-card" data-index="3">
+            <div class="proc-number">叁</div>
+            <h4>走出舒适区才能成长</h4>
+            <div class="proc-details">
+              <p>成长来自于不断突破自己的边界。学生需要被刻意引导甚至施加一定的外界压力。</p>
+              <p class="proc-highlight">教师在某些情况下表现得很 Tough 是必要的，可能会像一个严苛的教练一样。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Guide -->
+  <section id="guide" class="section section-alt">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-number">02</span>
+        <h2>课程开发指南</h2>
+        <p class="section-desc">从立项到交付的完整开发流程与规范</p>
+      </div>
+
+      <!-- Tabs -->
+      <div class="guide-tabs">
+        <button class="tab-btn active" data-tab="tab-design">设计原则</button>
+        <button class="tab-btn" data-tab="tab-flow">开发流程</button>
+        <button class="tab-btn" data-tab="tab-age">年龄适配</button>
+        <button class="tab-btn" data-tab="tab-module">四大板块</button>
+        <button class="tab-btn" data-tab="tab-pbl">PBL框架</button>
+      </div>
+
+      <!-- Tab: Design Principles -->
+      <div class="tab-content active" id="tab-design">
+        <div class="principles-grid">
+          <div class="principle-card">
+            <div class="principle-num">01</div>
+            <h4>宽广的面</h4>
+            <p class="principle-sub">刺激神经元之间的广泛连接，刺激好奇心</p>
+            <ul>
+              <li>课程内容覆盖多学科、多领域，避免单一知识点的灌输</li>
+              <li>每个主题需跨越至少 2 个内容板块</li>
+              <li>鼓励孩子发现知识之间的联系</li>
+            </ul>
+          </div>
+          <div class="principle-card">
+            <div class="principle-num">02</div>
+            <h4>自主学习</h4>
+            <p class="principle-sub">自己转动大脑，强化神经元之间的连接</p>
+            <ul>
+              <li>教师讲授时间不超过总时长的 30%</li>
+              <li>学生必须有动手实践、自主探索的时间</li>
+              <li>允许犯错，错误是学习的重要部分</li>
+            </ul>
+          </div>
+          <div class="principle-card">
+            <div class="principle-num">03</div>
+            <h4>小组学习</h4>
+            <p class="principle-sub">协作、表达、社会性学习</p>
+            <ul>
+              <li>设计需要协作才能完成的任务</li>
+              <li>每个孩子必须有表达和展示的机会</li>
+              <li>引导孩子学会倾听和尊重不同意见</li>
+            </ul>
+          </div>
+          <div class="principle-card">
+            <div class="principle-num">04</div>
+            <h4>真实情境</h4>
+            <p class="principle-sub">链接真实世界，解决真实问题</p>
+            <ul>
+              <li>课程问题来源于真实世界而非教科书</li>
+              <li>成果应有真实的使用场景和受众</li>
+              <li>尽可能在真实环境中开展学习（院子、户外）</li>
+            </ul>
+          </div>
+          <div class="principle-card">
+            <div class="principle-num">05</div>
+            <h4>走出舒适区</h4>
+            <p class="principle-sub">有意设计挑战和适度压力</p>
+            <ul>
+              <li>任务难度应略高于学生当前能力水平</li>
+              <li>设计需要勇气和冒险精神才能完成的环节</li>
+              <li>不回避冲突和竞争，将其作为成长的机会</li>
+            </ul>
+          </div>
+          <div class="principle-card">
+            <div class="principle-num">06</div>
+            <h4>尊重与自主</h4>
+            <p class="principle-sub">把选择权还给学生</p>
+            <ul>
+              <li>在框架内给学生充分的选择空间</li>
+              <li>不预设唯一正确答案</li>
+              <li>引导学生自我评价而非依赖外部评判</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab: Flow -->
+      <div class="tab-content" id="tab-flow">
+        <div class="flow-timeline">
+          <div class="flow-step">
+            <div class="flow-dot"></div>
+            <div class="flow-content">
+              <h4>第一步：主题立项</h4>
+              <div class="flow-checklist">
+                <p>✦ 确定课程所属板块（可跨板块）</p>
+                <p>✦ 明确对应年龄段（5-6 / 6-8 / 8-10 / 10-12）</p>
+                <p>✦ 定义核心驱动问题（Essential Question）</p>
+                <p>✦ 确定课程类型：常规课 / 营地课（5天）/ 户外研学</p>
+                <p>✦ 列出预期培养的能力和素质（对照教育目标）</p>
+              </div>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-dot"></div>
+            <div class="flow-content">
+              <h4>第二步：课程设计</h4>
+              <div class="flow-checklist">
+                <p>✦ 设计完整的 PBL 流程（见 PBL 框架）</p>
+                <p>✦ 规划各环节时间分配，确保教师讲授 ≤ 30%</p>
+                <p>✦ 设计小组协作任务和个人探索任务</p>
+                <p>✦ 准备分层挑战（基础 / 进阶 / 拓展）</p>
+                <p>✦ 设计走出舒适区的环节</p>
+                <p>✦ 列出所需材料和场地需求</p>
+              </div>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-dot"></div>
+            <div class="flow-content">
+              <h4>第三步：教案撰写</h4>
+              <div class="flow-checklist">
+                <p>✦ 完成标准化教案模板（含各环节详细描述）</p>
+                <p>✦ 撰写教师引导话术和关键提问</p>
+                <p>✦ 标注各环节的教育目标映射</p>
+                <p>✦ 准备学生材料包和学习单</p>
+                <p>✦ 设计形成性评估方式</p>
+              </div>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-dot"></div>
+            <div class="flow-content">
+              <h4>第四步：内部评审</h4>
+              <div class="flow-checklist">
+                <p>✦ 对照质量评价标准进行自评（见评价标准）</p>
+                <p>✦ 提交给课程总监进行评审</p>
+                <p>✦ 根据反馈修改完善</p>
+              </div>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-dot"></div>
+            <div class="flow-content">
+              <h4>第五步：试课与迭代</h4>
+              <div class="flow-checklist">
+                <p>✦ 完成至少一次试课</p>
+                <p>✦ 收集观课记录和学生反馈</p>
+                <p>✦ 根据试课结果修改并定稿</p>
+                <p>✦ 归档课程包（教案 + 材料 + 评估工具）</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab: Age -->
+      <div class="tab-content" id="tab-age">
+        <div class="age-grid">
+          <div class="age-card" data-age="5-6">
+            <div class="age-badge">K</div>
+            <h4>探索启蒙期</h4>
+            <div class="age-details">
+              <div class="age-section">
+                <h5>认知特点</h5>
+                <p>以感知觉和直觉思维为主，好奇心旺盛，注意力集中时间短（15-20分钟），喜欢模仿、喜欢重复。</p>
+              </div>
+              <div class="age-section">
+                <h5>课程设计要点</h5>
+                <ul>
+                  <li>活动切换频繁，单个活动不超过20分钟</li>
+                  <li>大量感官体验：触摸、操作、观察</li>
+                  <li>用故事和角色扮演驱动学习</li>
+                  <li>简单的团队游戏引入协作概念</li>
+                  <li>自由玩耍时间占比较大（≥40%）</li>
+                </ul>
+              </div>
+              <div class="age-section">
+                <h5>避免</h5>
+                <ul class="avoid-list">
+                  <li>长时间的静坐和纯讲授</li>
+                  <li>过于抽象的概念讲解</li>
+                  <li>要求精确的书写和记录</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="age-card" data-age="6-8">
+            <div class="age-badge">G1-G2</div>
+            <h4>能力建构期</h4>
+            <div class="age-details">
+              <div class="age-section">
+                <h5>认知特点</h5>
+                <p>具体运算思维发展，开始理解因果关系，能进行简单逻辑推理，社交意识增强。</p>
+              </div>
+              <div class="age-section">
+                <h5>课程设计要点</h5>
+                <ul>
+                  <li>引入有结构的探究任务</li>
+                  <li>开始培养自主阅读和简单记录习惯</li>
+                  <li>设计需要分工合作的小组项目</li>
+                  <li>鼓励用语言和简单图示表达思考</li>
+                  <li>开始引入适度竞争和挑战</li>
+                </ul>
+              </div>
+              <div class="age-section">
+                <h5>避免</h5>
+                <ul class="avoid-list">
+                  <li>过于复杂的多步骤项目</li>
+                  <li>需要长时间独立工作的任务</li>
+                  <li>评判性的结果比较</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="age-card" data-age="8-10">
+            <div class="age-badge">G3-G4</div>
+            <h4>深度探索期</h4>
+            <div class="age-details">
+              <div class="age-section">
+                <h5>认知特点</h5>
+                <p>逻辑思维显著增强，能够进行较深入的分析，自主意识增强，对公平正义有了理解。</p>
+              </div>
+              <div class="age-section">
+                <h5>课程设计要点</h5>
+                <ul>
+                  <li>完整的 PBL 项目流程</li>
+                  <li>鼓励独立思考和批判性提问</li>
+                  <li>引入辩论和多角度分析</li>
+                  <li>较复杂的动手制作和实验设计</li>
+                  <li>开始要求系统性的记录和反思</li>
+                </ul>
+              </div>
+              <div class="age-section">
+                <h5>避免</h5>
+                <ul class="avoid-list">
+                  <li>纯粹为了好玩而缺乏深度的活动</li>
+                  <li>给定唯一标准答案</li>
+                  <li>过度简化的任务</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="age-card" data-age="10-12">
+            <div class="age-badge">G5-G6</div>
+            <h4>独立思辨期</h4>
+            <div class="age-details">
+              <div class="age-section">
+                <h5>认知特点</h5>
+                <p>开始发展抽象思维，能理解复杂系统，强烈的自我意识和独立需求，开始形成自己的价值观。</p>
+              </div>
+              <div class="age-section">
+                <h5>课程设计要点</h5>
+                <ul>
+                  <li>高度自主的项目驱动学习</li>
+                  <li>深度的人文思辨和社会议题讨论</li>
+                  <li>复杂的工程和科学探究项目</li>
+                  <li>领导力培养：让学生担任小组长和导师</li>
+                  <li>演讲与正式展示环节必不可少</li>
+                </ul>
+              </div>
+              <div class="age-section">
+                <h5>避免</h5>
+                <ul class="avoid-list">
+                  <li>过于幼稚或缺乏智力挑战的内容</li>
+                  <li>教师单方面的权威控制</li>
+                  <li>缺乏自主选择空间的预设路径</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab: Module -->
+      <div class="tab-content" id="tab-module">
+        <div class="module-grid">
+          <div class="module-card" data-module="steam">
+            <div class="module-header">
+              <span class="module-icon">🔬</span>
+              <h4>STEAM</h4>
+            </div>
+            <div class="module-body">
+              <p class="module-desc">科学、技术、工程、艺术、数学的融合探索</p>
+              <h5>核心方向</h5>
+              <ul>
+                <li>人造物品的探索与拆解——理解事物如何运作</li>
+                <li>自然世界的探索——观察、实验、发现</li>
+                <li>动手搭建——从设计到制作</li>
+                <li>艺术表达——绘画、音乐、表演</li>
+                <li>问题探究——用科学方法解答疑问</li>
+              </ul>
+              <h5>课程开发要求</h5>
+              <ul>
+                <li>必须有可操作的动手实践环节</li>
+                <li>必须链接至少一个真实世界的科学或工程原理</li>
+                <li>鼓励发散设计，不限定唯一的制作结果</li>
+                <li>融入艺术和美学元素</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="module-card" data-module="humanities">
+            <div class="module-header">
+              <span class="module-icon">📚</span>
+              <h4>人文与思辨</h4>
+            </div>
+            <div class="module-body">
+              <p class="module-desc">培养独立思考、逻辑推理和人文素养</p>
+              <h5>核心方向</h5>
+              <ul>
+                <li>逻辑思维能力训练</li>
+                <li>独立思考与批判性思维培养</li>
+                <li>世界历史与人类文明</li>
+                <li>传统文化的理解与反思</li>
+                <li>演讲与表达</li>
+                <li>精选阅读与自主阅读</li>
+              </ul>
+              <h5>课程开发要求</h5>
+              <ul>
+                <li>必须包含开放性讨论和辩论环节</li>
+                <li>不预设立场，引导多角度思考</li>
+                <li>历史故事需链接到当代社会议题</li>
+                <li>阅读材料需精心选择，匹配年龄段</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="module-card" data-module="play">
+            <div class="module-header">
+              <span class="module-icon">⚽</span>
+              <h4>玩耍与体育</h4>
+            </div>
+            <div class="module-body">
+              <p class="module-desc">在游戏和运动中培养体育精神和冒险勇气</p>
+              <h5>核心方向</h5>
+              <ul>
+                <li>需要身体技能的游戏</li>
+                <li>需要智力的游戏</li>
+                <li>需要自己动手制作工具的游戏</li>
+                <li>亲近自然的游戏</li>
+                <li>对抗类游戏（摔跤、拳击、互扔沙包、斗鸡）</li>
+                <li>团队运动（以篮球、足球为主）</li>
+              </ul>
+              <h5>课程开发要求</h5>
+              <ul>
+                <li>必须有明确的体育精神和品格培养目标</li>
+                <li>对抗类游戏需设计安全保障方案</li>
+                <li>培养合作意识、毅力与勇气</li>
+                <li>目标是培养终生运动爱好</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="module-card" data-module="nature">
+            <div class="module-header">
+              <span class="module-icon">🌿</span>
+              <h4>自然与生活</h4>
+            </div>
+            <div class="module-body">
+              <p class="module-desc">在真实生活中锻炼品格和独立能力</p>
+              <h5>核心方向</h5>
+              <ul>
+                <li>品性和毅力的锻炼——坚毅品格培养</li>
+                <li>独立生活能力</li>
+                <li>与人配合的能力</li>
+                <li>基本生活技能</li>
+                <li>户外研学和自然探索</li>
+              </ul>
+              <h5>课程开发要求</h5>
+              <ul>
+                <li>必须有真实的生活场景和任务</li>
+                <li>营地课需设计独立生活环节</li>
+                <li>户外研学需有明确的学习目标，不是简单的出游</li>
+                <li>生活技能需可衡量的达标标准</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab: PBL -->
+      <div class="tab-content" id="tab-pbl">
+        <div class="pbl-framework">
+          <div class="pbl-intro">
+            <h4>PBL（项目式学习）课程框架</h4>
+            <p>所有课程必须基于 PBL 方法论设计，以下为标准流程框架：</p>
+          </div>
+          <div class="pbl-steps">
+            <div class="pbl-step">
+              <div class="pbl-step-num">①</div>
+              <div class="pbl-step-content">
+                <h5>驱动问题 <span class="pbl-en">Driving Question</span></h5>
+                <p>提出一个真实的、有意义的、开放性的核心问题。问题应该能激发好奇心，且没有唯一答案。</p>
+                <div class="pbl-example">
+                  <span>示例</span> "如何设计一个水枪检测装置，让打水仗可以知道输赢？"
+                </div>
+              </div>
+            </div>
+            <div class="pbl-step">
+              <div class="pbl-step-num">②</div>
+              <div class="pbl-step-content">
+                <h5>知识构建 <span class="pbl-en">Knowledge Building</span></h5>
+                <p>围绕驱动问题，学生自主探索所需的知识和技能。教师提供资源支架，但不直接给出答案。</p>
+              </div>
+            </div>
+            <div class="pbl-step">
+              <div class="pbl-step-num">③</div>
+              <div class="pbl-step-content">
+                <h5>方案设计 <span class="pbl-en">Solution Design</span></h5>
+                <p>学生（小组或个人）设计解决方案。鼓励多种方案并行，鼓励迭代和改进。</p>
+              </div>
+            </div>
+            <div class="pbl-step">
+              <div class="pbl-step-num">④</div>
+              <div class="pbl-step-content">
+                <h5>动手实践 <span class="pbl-en">Hands-on Execution</span></h5>
+                <p>将方案付诸实践。这是占时最多的环节——制作、搭建、实验、测试。</p>
+              </div>
+            </div>
+            <div class="pbl-step">
+              <div class="pbl-step-num">⑤</div>
+              <div class="pbl-step-content">
+                <h5>展示与反思 <span class="pbl-en">Presentation & Reflection</span></h5>
+                <p>学生向他人展示成果，并进行自我反思：学到了什么？下次如何做得更好？</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Matrix: Age × Module -->
+  <section id="matrix" class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-number">03</span>
+        <h2>年龄段 × 板块内容框架</h2>
+        <p class="section-desc">4 个年龄段 × 4 大板块 = 16 种内容框架，点击查看详细指引</p>
+      </div>
+
+      <!-- Matrix Filter Buttons -->
+      <div class="matrix-filters">
+        <div class="matrix-filter-group">
+          <span class="filter-label">年龄段</span>
+          <button class="matrix-filter-btn active" data-age-filter="all">全部</button>
+          <button class="matrix-filter-btn" data-age-filter="5-6">K · 启蒙期</button>
+          <button class="matrix-filter-btn" data-age-filter="6-8">G1-G2 · 探索期</button>
+          <button class="matrix-filter-btn" data-age-filter="8-10">G3-G4 · 应用期</button>
+          <button class="matrix-filter-btn" data-age-filter="10-12">G5-G6 · 创新期</button>
+        </div>
+        <div class="matrix-filter-group">
+          <span class="filter-label">板块</span>
+          <button class="matrix-filter-btn active" data-mod-filter="all">全部</button>
+          <button class="matrix-filter-btn" data-mod-filter="steam">🔬 STEAM · 探索与创造</button>
+          <button class="matrix-filter-btn" data-mod-filter="humanities">📚 人文与思辨 · 自我与社会</button>
+          <button class="matrix-filter-btn" data-mod-filter="play">⚽ 玩耍与体育 · 意志与协作</button>
+          <button class="matrix-filter-btn" data-mod-filter="nature">🌿 自然与生活 · 连接与责任</button>
+        </div>
+      </div>
+
+      <!-- Matrix Grid -->
+      <div class="matrix-grid" id="matrix-grid">
+
+        <!-- ===== K · STEAM ===== -->
+        <div class="matrix-cell" data-cell-age="5-6" data-cell-mod="steam">
+          <div class="cell-header">
+            <span class="cell-age-tag age-5-6">K</span>
+            <span class="cell-mod-tag mod-steam">🔬 STEAM</span>
+          </div>
+          <h4 class="cell-title">感官启迪</h4>
+          <p class="cell-theme">认识工具与材料，通过简单搭建感受力的存在，建立对物理因果的初步好奇</p>
+          <div class="cell-body">
+            <div class="cell-section">
+              <h5>能力目标</h5>
+              <ul class="ability-targets">
+                <li><strong>建立认知</strong> — 认识工具与材料，理解安全使用规则</li>
+                <li><strong>感受好奇</strong> — 感知力的存在，对物理现象产生兴趣</li>
+                <li><strong>理解因果</strong> — 理解"原因"与"结果"的逻辑关联</li>
+                <li><strong>搭建稳固</strong> — 具备搭建三维立体结构的基础能力</li>
+              </ul>
+            </div>
+            <div class="cell-section">
+              <h5>内容方向</h5>
+              <ul>
+                <li><strong>物品探索：</strong>拆开旧玩具/闹钟，看看「里面有什么」——在惊叹中建立好奇心</li>
+                <li><strong>感官实验：</strong>颜色混合、磁铁吸引、水的流动、影子游戏——感知物理因果</li>
+                <li><strong>基础搭建：</strong>用积木/黏土/纸板自由搭建三维结构，不限定造型，鼓励想象</li>
+                <li><strong>工具启蒙：</strong>安全使用剪刀、尺子、锤子等基础工具，建立操作规范</li>
+                <li><strong>艺术表达：</strong>用画笔记录观察到的现象、自由涂鸦、用搭建作品讲故事</li>
+              </ul>
+            </div>
+            <div class="cell-section">
+              <h5>活动形式</h5>
+              <ul>
+                <li>单个活动 ≤ 15分钟，频繁切换</li>
+                <li>以故事和角色扮演引入（如：「我们是小小科学家」）</li>
+                <li>自由探索时间 ≥ 50%</li>
+                <li>用画/口述代替书写记录</li>
+              </ul>
+            </div>
+            <div class="cell-section">
+              <h5>示例课题</h5>
+              <div class="cell-examples">
+                <span>🎨 "颜色从哪来？" — 用花瓣/蔬菜提取颜色，感知因果</span>
+                <span>🧲 "什么东西会被吸住？" — 磁铁探索之旅</span>
+                <span>🏗️ "最高的塔" — 用积木搭建稳固的立体结构</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== K · 人文与思辨 ===== -->
+        <div class="matrix-cell" data-cell-age="5-6" data-cell-mod="humanities">
+          <div class="cell-header">
+            <span class="cell-age-tag age-5-6">K</span>
+            <span class="cell-mod-tag mod-humanities">📚 人文与思辨</span>
+          </div>
+          <h4 class="cell-title">情绪初识</h4>
+          <p class="cell-theme">识别基本情绪，在游戏中学习轮流与分享，建立对家庭和规则的初步认知</p>
+          <div class="cell-body">
+            <div class="cell-section">
+              <h5>能力目标</h5>
+              <ul class="ability-targets">
+                <li><strong>识别情绪</strong> — 能够说出自己的开心、难过、生气等感受</li>
+                <li><strong>学习交往</strong> — 在互动中尝试轮流、等待、分享</li>
+                <li><strong>理解家庭</strong> — 认识家庭成员的关联与彼此的付出</li>
+                <li><strong>建立边界</strong> — 具备基本的对错判断意识、理解公共规则</li>
+              </ul>
+            </div>
+            <div class="cell-section">
+              <h5>内容方向</h5>
+              <ul>
+                <li><strong>绘本共读：</strong>精选经典绘本，引导孩子讨论「你觉得主人公做得对吗？为什么？」</li>
+                <li><strong>故事扮演：</strong>把历史人物/文化故事变成角色扮演游戏</li>
+                <li><strong>简单讨论：</strong>「公平是什么？」「如果是你会怎么做？」——培养初步思辨意识</li>
+                <li><strong>口语表达：</strong>每日分享「今天最有趣的事」，鼓励完整表达</li>
+                <li><strong>识字启蒙：</strong>通过游戏化方式快速掌握常用汉字，为自主阅读做准备</li>
+              </ul>
+            </div>
+            <div class="cell-section">
+              <h5>活动形式</h5>
+              <ul>
+                <li>绘本/故事驱动，不做纯文字讲授</li>
+                <li>大量角色扮演和情景模拟</li>
+                <li>画画代替写字来表达想法</li>
+                <li>鼓励「大声说出来」，不纠正语法</li>
+              </ul>
+            </div>
+            <div class="cell-section">
+              <h5>示例课题</h5>
+              <div class="cell-examples">
+                <span>📖 "小熊做对了吗？" — 绘本讨论对错与选择</span>
+                <span>🎭 "如果我是古代的国王" — 角色扮演学文化</span>
+                <span>🗣️ "我的宝贝是什么" — Show & Tell 练习表达</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== K · 玩耍与体育 ===== -->
+        <div class="matrix-cell" data-cell-age="5-6" data-cell-mod="play">
+          <div class="cell-header">
+            <span class="cell-age-tag age-5-6">K</span>
+            <span class="cell-mod-tag mod-play">⚽ 玩耍与体育</span>
+          </div>
+          <h4 class="cell-title">快乐动感</h4>
+          <p class="cell-theme">掌握跑跳攀爬等基础动作，在游戏中理解输赢，感受身体运动的纯粹乐趣</p>
+          <div class="cell-body">
+            <div class="cell-section">
+              <h5>能力目标</h5>
+              <ul class="ability-targets">
+                <li><strong>基础动作</strong> — 掌握跑、跳、攀爬、抛接等基本身体控制</li>
+                <li><strong>遵守规则</strong> — 在游戏中理解并愿意遵守简单规则</li>
+                <li><strong>接纳结果</strong> — 能够面对输赢，不因结果过度情绪化</li>
+                <li><strong>体验乐趣</strong> — 广泛接触多种运动，感受玩耍的快乐</li>
+              </ul>
+            </div>
+            <div class="cell-section">
+              <h5>内容方向</h5>
+              <ul>
+                <li><strong>基础运动：</strong>跑、跳、爬、翻滚等基本动作发展，广泛接触多种运动形式</li>
+                <li><strong>规则游戏：</strong>老鹰捉小鸡、丢手绢、123木头人——在游戏中理解并遵守规则</li>
+                <li><strong>轻度对抗：</strong>互扔软沙包、简单推手——感受身体接触，面对输赢不害怕</li>
+                <li><strong>自然游戏：</strong>在院子里爬树、挖土、玩水、追逐——感受运动的纯粹乐趣</li>
+                <li><strong>合作游戏：</strong>两人三足、传球接力——初步感受团队配合</li>
+              </ul>
+            </div>
+            <div class="cell-section">
+              <h5>活动形式</h5>
+              <ul>
+                <li>自由游戏占比 ≥ 50%</li>
+                <li>规则简单、变化多，避免长时间等待</li>
+                <li>安全引导为主，不要求技术动作标准</li>
+                <li>引导基本的体育礼仪（排队、轮替、输赢都握手）</li>
+              </ul>
+            </div>
+            <div class="cell-section">
+              <h5>示例课题</h5>
+              <div class="cell-examples">
+                <span>🏃 "动物运动会" — 模仿动物动作的体能游戏</span>
+                <span>🤝 "我们是一队" — 两人合作完成障碍赛</span>
+                <span>🎯 "扔中它!" — 投掷准确度趣味挑战</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== K · 自然与生活 ===== -->
+        <div class="matrix-cell" data-cell-age="5-6" data-cell-mod="nature">
+          <div class="cell-header">
+            <span class="cell-age-tag age-5-6">K</span>
+            <span class="cell-mod-tag mod-nature">🌿 自然与生活</span>
+          </div>
+          <h4 class="cell-title">自我萌芽</h4>
+          <p class="cell-theme">学习独立照料日常起居，在种植与观察中建立与自然的最初连接</p>
+          <div class="cell-body">
+            <div class="cell-section">
+              <h5>能力目标</h5>
+              <ul class="ability-targets">
+                <li><strong>自我照料</strong> — 独立完成日常穿衣、收纳等基本事务</li>
+                <li><strong>观察生命</strong> — 关注植物或小动物的成长过程</li>
+                <li><strong>亲近自然</strong> — 辨识身边常见的动植物</li>
+                <li><strong>参与集体</strong> — 愿意承担简单的班级或小组任务</li>
+              </ul>
+            </div>
+            <div class="cell-section">
+              <h5>内容方向</h5>
+              <ul>
+                <li><strong>生活自理：</strong>自己穿衣、整理物品、简单的餐前准备——独立完成日常事务</li>
+                <li><strong>生命观察：</strong>种植简单植物、照顾小动物——关注生命的成长过程</li>
+                <li><strong>自然辨识：</strong>辨识院子和周边常见的动植物，感受四季变化</li>
+                <li><strong>食物体验：</strong>洗菜、揉面团、做简单的沙拉——认识食物从哪来</li>
+                <li><strong>感官探索：</strong>放大镜观察昆虫/泥土，触摸不同材质，听辨自然界的声音</li>
+              </ul>
+            </div>
+            <div class="cell-section">
+              <h5>活动形式</h5>
+              <ul>
+                <li>做中学，所有生活技能在真实场景中练习</li>
+                <li>不替孩子做，允许慢、允许不完美</li>
+                <li>结合故事和游戏增加趣味性</li>
+                <li>每次活动后简单分享「今天我学会了什么」</li>
+              </ul>
+            </div>
+            <div class="cell-section">
+              <h5>示例课题</h5>
+              <div class="cell-examples">
+                <span>🌱 "种一颗种子" — 观察发芽过程，关注生命成长</span>
+                <span>🥗 "我的第一份沙拉" — 自己动手做简单食物</span>
+                <span>🐛 "谁住在花园里" — 辨识常见动植物</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== G1-G2 · STEAM ===== -->
+        <div class="matrix-cell" data-cell-age="6-8" data-cell-mod="steam">
+          <div class="cell-header">
+            <span class="cell-age-tag age-6-8">G1-G2</span>
+            <span class="cell-mod-tag mod-steam">🔬 STEAM</span>
+          </div>
+          <h4 class="cell-title">机械入门</h4>
+          <p class="cell-theme">理解简单机械与电路原理，通过图形化编程建立逻辑思维，经历从想法到实物的完整过程</p>
+          <div class="cell-body">
+            <div class="cell-section">
+              <h5>能力目标</h5>
+              <ul class="ability-targets">
+                <li><strong>认识机械</strong> — 理解简单机械如何改变力的大小或方向</li>
+                <li><strong>感知电路</strong> — 建立闭合回路的基本概念</li>
+                <li><strong>图形编程</strong> — 理解程序的基本逻辑与指令序列</li>
+                <li><strong>设计搭建</strong> — 经历从想法到实物的完整过程</li>
+              </ul>
+            </div>
+            <div class="cell-section">
+              <h5>内容方向</h5>
+              <ul>
+                <li><strong>简单机械：</strong>杠杆、滑轮、斜面——理解机械如何改变力的方向和大小</li>
+                <li><strong>电路基础：</strong>用电池/导线/灯泡搭建闭合回路，理解通断原理</li>
+                <li><strong>图形化编程：</strong>Scratch/类似工具入门，理解顺序/循环/条件指令</li>
+                <li><strong>工程实践：</strong>用纸板/木棍/绳子搭建桥梁、塔楼——经历从想法到实物的完整过程</li>
+                <li><strong>艺术+科学：</strong>对称绘画、声音可视化、用光影和色彩探索科学原理</li>
+              </ul>
+            </div>
+            <div class="cell-section">
+              <h5>活动形式</h5>
+              <ul>
+                <li>单个活动 20-30分钟</li>
+                <li>引入简单的记录方式（画图 + 简单文字）</li>
+                <li>小组 2-3 人合作实验</li>
+                <li>「先猜再试」—— 培养假设与验证的习惯</li>
+              </ul>
+            </div>
+            <div class="cell-section">
+              <h5>示例课题</h5>
+              <div class="cell-examples">
+                <span>✈️ "飞得最远的纸飞机" — 测试不同折法的飞行距离</span>
+                <span>🔦 "手电筒里有什么" — 拆解并理解电路基础</span>
+                <span>🌈 "彩虹是怎么来的" — 光的折射实验</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== G1-G2 · 人文与思辨 ===== -->
+        <div class="matrix-cell" data-cell-age="6-8" data-cell-mod="humanities">
+          <div class="cell-header">
+            <span class="cell-age-tag age-6-8">G1-G2</span>
+            <span class="cell-mod-tag mod-humanities">📚 人文与思辨</span>
+          </div>
+          <h4 class="cell-title">共情萌芽</h4>
+          <p class="cell-theme">学会倾听与角色扮演，理解不同社会角色的价值，在规则制定中培养责任意识</p>
+          <div class="cell-body">
+            <div class="cell-section">
+              <h5>能力目标</h5>
+              <ul class="ability-targets">
+                <li><strong>学会倾听</strong> — 能够复述他人观点并做出回应</li>
+                <li><strong>理解角色</strong> — 通过体验认识不同社会角色的价值</li>
+                <li><strong>参与规则</strong> — 理解规则的意义，参与制定和遵守</li>
+                <li><strong>承担责任</strong> — 具备承认错误并弥补过失的勇气</li>
+              </ul>
+            </div>
+            <div class="cell-section">
+              <h5>内容方向</h5>
+              <ul>
+                <li><strong>历史故事：</strong>用生动的故事了解世界不同文明（古埃及、古希腊、中国古代），重在激发兴趣</li>
+                <li><strong>逻辑启蒙：</strong>简单的逻辑谜题、推理游戏、「找不同」和「因果链」练习</li>
+                <li><strong>讨论练习：</strong>从故事出发讨论「这样做公平吗？」，初步建立多角度思考</li>
+                <li><strong>自主阅读：</strong>建立每日阅读习惯，精选桥梁书和初级章节书</li>
+                <li><strong>表达练习：</strong>复述故事、讲述自己的观点、简单的 Show & Tell</li>
+              </ul>
+            </div>
+            <div class="cell-section">
+              <h5>活动形式</h5>
+              <ul>
+                <li>故事引入 + 讨论 + 表达输出</li>
+                <li>用简单图示来组织思路（思维导图雏形）</li>
+                <li>允许用画+写混合方式记录想法</li>
+                <li>小组讨论时每人必须说</li>
+              </ul>
+            </div>
+            <div class="cell-section">
+              <h5>示例课题</h5>
+              <div class="cell-examples">
+                <span>🏛️ "住在金字塔里的人" — 古埃及文明探索</span>
+                <span>🧩 "谁偷了蛋糕" — 逻辑推理游戏</span>
+                <span>📢 "我来当记者" — 采访同伴并报道</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== G1-G2 · 玩耍与体育 ===== -->
+        <div class="matrix-cell" data-cell-age="6-8" data-cell-mod="play">
+          <div class="cell-header">
+            <span class="cell-age-tag age-6-8">G1-G2</span>
+            <span class="cell-mod-tag mod-play">⚽ 玩耍与体育</span>
+          </div>
+          <h4 class="cell-title">协作初建</h4>
+          <p class="cell-theme">提升身体协调性，在团队运动中学习配合，建立热身与放松的运动习惯</p>
+          <div class="cell-body">
+            <div class="cell-section">
+              <h5>能力目标</h5>
+              <ul class="ability-targets">
+                <li><strong>协调灵活</strong> — 具备较好的身体协调性与灵活性</li>
+                <li><strong>团队配合</strong> — 理解合作概念，在集体运动中配合他人</li>
+                <li><strong>体能基础</strong> — 具备持续运动的基础耐力</li>
+                <li><strong>运动习惯</strong> — 建立运动前热身与运动后放松的意识</li>
+              </ul>
+            </div>
+            <div class="cell-section">
+              <h5>内容方向</h5>
+              <ul>
+                <li><strong>团队运动入门：</strong>篮球/足球基本技能和简化规则的比赛</li>
+                <li><strong>制作游戏工具：</strong>自己制作沙包、弹弓、纸板盾牌等游戏道具</li>
+                <li><strong>对抗游戏：</strong>互扔沙包、单腿斗鸡、简单摔跤——学会面对身体对抗</li>
+                <li><strong>策略游戏：</strong>需要动脑的追逐游戏、藏宝/寻宝</li>
+                <li><strong>自然游戏：</strong>在户外利用地形进行的攻防游戏</li>
+              </ul>
+            </div>
+            <div class="cell-section">
+              <h5>活动形式</h5>
+              <ul>
+                <li>活动前讲清规则和安全要求</li>
+                <li>输赢后必须行礼/握手——建立体育精神仪式</li>
+                <li>渐进式对抗：从低强度到中强度</li>
+                <li>引导反思「今天你勇敢了吗？」</li>
+              </ul>
+            </div>
+            <div class="cell-section">
+              <h5>示例课题</h5>
+              <div class="cell-examples">
+                <span>⚔️ "勇士训练营" — 渐进式身体对抗游戏</span>
+                <span>🏀 "我的第一场球赛" — 简化规则的篮球/足球赛</span>
+                <span>🛡️ "自制装备战" — 用纸板做装备的攻防游戏</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== G1-G2 · 自然与生活 ===== -->
+        <div class="matrix-cell" data-cell-age="6-8" data-cell-mod="nature">
+          <div class="cell-header">
+            <span class="cell-age-tag age-6-8">G1-G2</span>
+            <span class="cell-mod-tag mod-nature">🌿 自然与生活</span>
+          </div>
+          <h4 class="cell-title">走出家门</h4>
+          <p class="cell-theme">学习使用地图与工具，掌握基础生活技能，在户外探索中建立安全意识和环保观念</p>
+          <div class="cell-body">
+            <div class="cell-section">
+              <h5>能力目标</h5>
+              <ul class="ability-targets">
+                <li><strong>辨别方位</strong> — 能够使用地图、指南针等工具进行定位</li>
+                <li><strong>生活技能</strong> — 掌握基础烹饪、整理等日常事务能力</li>
+                <li><strong>户外探索</strong> — 具备走出熟悉环境的基本安全意识</li>
+                <li><strong>环保意识</strong> — 理解资源循环，建立初步的环保观念</li>
+              </ul>
+            </div>
+            <div class="cell-section">
+              <h5>内容方向</h5>
+              <ul>
+                <li><strong>独立生活：</strong>自己整理书包/材料、打扫和收纳工作区域、简单的衣物整理</li>
+                <li><strong>烹饪入门：</strong>安全使用刀具切水果、做简单的面食、学习食材处理</li>
+                <li><strong>自然记录：</strong>记录植物生长变化、天气日历、简单的水循环观测——建立观察与记录习惯</li>
+                <li><strong>团队生活：</strong>小组分工完成一项生活任务（如布置活动空间）</li>
+                <li><strong>短途研学：</strong>在指导下进行周边自然环境的定向探索</li>
+              </ul>
+            </div>
+            <div class="cell-section">
+              <h5>活动形式</h5>
+              <ul>
+                <li>生活任务真实化——不是模拟，是真正需要完成的任务</li>
+                <li>教师不代劳，即使做得慢也让孩子自己来</li>
+                <li>引入简单的检查清单让孩子自我核对</li>
+                <li>开始有营地体验元素（半日营）</li>
+              </ul>
+            </div>
+            <div class="cell-section">
+              <h5>示例课题</h5>
+              <div class="cell-examples">
+                <span>🍞 "今天我做早餐" — 安全操作学做三明治</span>
+                <span>📓 "自然侦探笔记" — 连续记录校园植物变化</span>
+                <span>🏕️ "小小探险家" — 半日公园自然探索</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== G3-G4 · STEAM ===== -->
+        <div class="matrix-cell" data-cell-age="8-10" data-cell-mod="steam">
+          <div class="cell-header">
+            <span class="cell-age-tag age-8-10">G3-G4</span>
+            <span class="cell-mod-tag mod-steam">🔬 STEAM</span>
+          </div>
+          <h4 class="cell-title">系统构建</h4>
+          <p class="cell-theme">运用传动结构与传感器，掌握编程逻辑，经历测试与迭代的完整闭环</p>
+          <div class="cell-body">
+            <div class="cell-section">
+              <h5>能力目标</h5>
+              <ul class="ability-targets">
+                <li><strong>应用传动</strong> — 运用齿轮、连杆等实现特定功能的装置</li>
+                <li><strong>使用传感</strong> — 理解传感器原理，实现软硬件交互</li>
+                <li><strong>编程逻辑</strong> — 掌握条件、循环、变量等编程结构</li>
+                <li><strong>迭代改进</strong> — 经历测试与优化，完成工程闭环</li>
+              </ul>
+            </div>
+            <div class="cell-section">
+              <h5>内容方向</h5>
+              <ul>
+                <li><strong>科学探究：</strong>提出假设→设计实验→收集数据→分析结论的完整流程</li>
+                <li><strong>工程挑战：</strong>修建水坝并经受水流冲击、制作弩机、搭建桥梁承重挑战</li>
+                <li><strong>原理验证：</strong>验证阿基米德浮力原理、探索杠杆/滑轮/齿轮原理</li>
+                <li><strong>技术应用：</strong>制作光通信装置、简单电路设计、编程入门</li>
+                <li><strong>跨学科艺术：</strong>将科学原理融入艺术作品（如声波画、太阳能雕塑）</li>
+              </ul>
+            </div>
+            <div class="cell-section">
+              <h5>活动形式</h5>
+              <ul>
+                <li>完整的 PBL 项目流程（可跨越多次课）</li>
+                <li>系统性的实验记录和数据收集</li>
+                <li>小组 3-4 人合作，有明确分工</li>
+                <li>项目结束需要正式展示和答辩</li>
+              </ul>
+            </div>
+            <div class="cell-section">
+              <h5>示例课题</h5>
+              <div class="cell-examples">
+                <span>🏗️ "修建一座能抗洪的水坝" — 水利工程挑战</span>
+                <span>💡 "光能传递信息吗？" — 光通信装置设计</span>
+                <span>🏹 "制作一把弓箭" — 弹性与力学探索</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== G3-G4 · 人文与思辨 ===== -->
+        <div class="matrix-cell" data-cell-age="8-10" data-cell-mod="humanities">
+          <div class="cell-header">
+            <span class="cell-age-tag age-8-10">G3-G4</span>
+            <span class="cell-mod-tag mod-humanities">📚 人文与思辨</span>
+          </div>
+          <h4 class="cell-title">理性思辨</h4>
+          <p class="cell-theme">区分事实与观点，针对身边问题提出解决方案，在团队中承担组织协调角色</p>
+          <div class="cell-body">
+            <div class="cell-section">
+              <h5>能力目标</h5>
+              <ul class="ability-targets">
+                <li><strong>区分事实</strong> — 能够辨别“事实”与“观点”的差异</li>
+                <li><strong>解决问题</strong> — 针对身边问题提出见解并尝试解决</li>
+                <li><strong>尊重差异</strong> — 理解文化的多样性与个体的独特性</li>
+                <li><strong>组织协调</strong> — 在团队中承担协调或组织角色</li>
+              </ul>
+            </div>
+            <div class="cell-section">
+              <h5>内容方向</h5>
+              <ul>
+                <li><strong>历史深度探究：</strong>哥伦布发现新大陆的故事——是「发现」还是「入侵」？多角度分析</li>
+                <li><strong>辩论与讨论：</strong>围绕争议话题进行结构化辩论（正方/反方/评委）</li>
+                <li><strong>阅读与思考：</strong>精选中长篇读物，配合阅读笔记和讨论</li>
+                <li><strong>逻辑思维：</strong>更复杂的推理训练、逻辑谬误识别入门</li>
+                <li><strong>演讲训练：</strong>有结构的演讲练习——观点+论据+结论</li>
+              </ul>
+            </div>
+            <div class="cell-section">
+              <h5>活动形式</h5>
+              <ul>
+                <li>先阅读/看材料 → 独立思考 → 小组讨论 → 全班分享</li>
+                <li>写简短的思考笔记和读书笔记</li>
+                <li>允许并鼓励挑战教师的观点</li>
+                <li>引入苏格拉底式提问</li>
+              </ul>
+            </div>
+            <div class="cell-section">
+              <h5>示例课题</h5>
+              <div class="cell-examples">
+                <span>🌍 "哥伦布是英雄还是侵略者？" — 多角度历史分析</span>
+                <span>⚖️ "这样公平吗？" — 价值观辩论</span>
+                <span>📝 "如果我给市长写一封信" — 公民意识写作与演讲</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== G3-G4 · 玩耍与体育 ===== -->
+        <div class="matrix-cell" data-cell-age="8-10" data-cell-mod="play">
+          <div class="cell-header">
+            <span class="cell-age-tag age-8-10">G3-G4</span>
+            <span class="cell-mod-tag mod-play">⚽ 玩耍与体育</span>
+          </div>
+          <h4 class="cell-title">规则内化</h4>
+          <p class="cell-theme">适应多元运动项目，自发维护规则，理解团队战术，愿意挑战适度难度</p>
+          <div class="cell-body">
+            <div class="cell-section">
+              <h5>能力目标</h5>
+              <ul class="ability-targets">
+                <li><strong>多元能力</strong> — 具备适应不同运动项目的身体能力储备</li>
+                <li><strong>维护规则</strong> — 理解并自发维护各项运动的规则</li>
+                <li><strong>战术意识</strong> — 参与团队战术讨论，理解分工配合</li>
+                <li><strong>挑战自我</strong> — 愿意接受适度难度的运动任务</li>
+              </ul>
+            </div>
+            <div class="cell-section">
+              <h5>内容方向</h5>
+              <ul>
+                <li><strong>团队运动深化：</strong>篮球/足球正式规则比赛，学习战术配合</li>
+                <li><strong>中高强度对抗：</strong>安全摔跤、拳击基础、多人对抗游戏——在对抗中学会控制和尊重</li>
+                <li><strong>DIY 运动器材：</strong>自制弓箭比赛、自制投石器比赛</li>
+                <li><strong>体能挑战：</strong>障碍赛、耐力跑、引体向上挑战——推动身体极限</li>
+                <li><strong>策略性游戏：</strong>夺旗赛、定向越野等需要策略和团队配合的游戏</li>
+              </ul>
+            </div>
+            <div class="cell-section">
+              <h5>活动形式</h5>
+              <ul>
+                <li>正式比赛形式，有裁判和规则</li>
+                <li>赛后必须复盘——学到了什么？如何改进？</li>
+                <li>教师可以做严苛教练——推动孩子突破自己</li>
+                <li>体育精神高于比赛结果</li>
+              </ul>
+            </div>
+            <div class="cell-section">
+              <h5>示例课题</h5>
+              <div class="cell-examples">
+                <span>🥊 "勇者的训练" — 拳击基础 + 安全对抗</span>
+                <span>🏹 "投射大赛" — 自制投射器材竞赛</span>
+                <span>🚩 "夺旗战" — 需要策略和体能的团队对抗</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== G3-G4 · 自然与生活 ===== -->
+        <div class="matrix-cell" data-cell-age="8-10" data-cell-mod="nature">
+          <div class="cell-header">
+            <span class="cell-age-tag age-8-10">G3-G4</span>
+            <span class="cell-mod-tag mod-nature">🌿 自然与生活</span>
+          </div>
+          <h4 class="cell-title">社会连接</h4>
+          <p class="cell-theme">独立完成城市出行，掌握急救技能，通过社会服务实践理解个人对社区的责任</p>
+          <div class="cell-body">
+            <div class="cell-section">
+              <h5>能力目标</h5>
+              <ul class="ability-targets">
+                <li><strong>独立出行</strong> — 规划路线并安全完成城市交通出行</li>
+                <li><strong>安全防护</strong> — 掌握基础急救技能与自我保护方法</li>
+                <li><strong>自然记录</strong> — 进行户外观察与调研记录</li>
+                <li><strong>服务实践</strong> — 参与真实的社会服务或公益活动</li>
+              </ul>
+            </div>
+            <div class="cell-section">
+              <h5>内容方向</h5>
+              <ul>
+                <li><strong>烹饪技能：</strong>独立完成一餐饭——从采购清单到烹饪到收拾</li>
+                <li><strong>营地生活：</strong>5天主题营地课——自己整理行囊、保持营地整洁、管理个人时间</li>
+                <li><strong>户外技能：</strong>辨别方向、简单绳结、搭建临时遮蔽物、生火安全</li>
+                <li><strong>自然探究：</strong>生态系统观察、物种识别、简单的环境监测</li>
+                <li><strong>社区参与：</strong>参与简单的社区服务或公益活动</li>
+              </ul>
+            </div>
+            <div class="cell-section">
+              <h5>活动形式</h5>
+              <ul>
+                <li>真实任务——做饭不是演示，是要真的给大家吃</li>
+                <li>营地课中逐步减少教师干预，培养自主管理</li>
+                <li>户外研学有明确的探究任务，不是旅游</li>
+                <li>引入反思日记</li>
+              </ul>
+            </div>
+            <div class="cell-section">
+              <h5>示例课题</h5>
+              <div class="cell-examples">
+                <span>🍳 "今天我掌勺" — 独立完成一餐烹饪</span>
+                <span>🏕️ "荒野5日营" — 主题营地独立生活体验</span>
+                <span>🗺️ "这条河流从哪来" — 户外水源生态研学</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== G5-G6 · STEAM ===== -->
+        <div class="matrix-cell" data-cell-age="10-12" data-cell-mod="steam">
+          <div class="cell-header">
+            <span class="cell-age-tag age-10-12">G5-G6</span>
+            <span class="cell-mod-tag mod-steam">🔬 STEAM</span>
+          </div>
+          <h4 class="cell-title">创新孵化</h4>
+          <p class="cell-theme">从真实问题出发提出原创方案，综合运用软硬件与数字制造实现原型，在试错迭代中完成创新表达</p>
+          <div class="cell-body">
+            <div class="cell-section">
+              <h5>能力目标</h5>
+              <ul class="ability-targets">
+                <li><strong>原创构想</strong> — 从真实问题出发，提出具有独创性的解决方案</li>
+                <li><strong>原型实现</strong> — 综合运用硬件、软件、数字制造实现原型</li>
+                <li><strong>优化迭代</strong> — 基于测试反馈自主持续改进，在试错中成长</li>
+                <li><strong>创新表达</strong> — 能够清晰地阐述设计思路、创新点与价值所在</li>
+              </ul>
+            </div>
+            <div class="cell-section">
+              <h5>内容方向</h5>
+              <ul>
+                <li><strong>独立研究项目：</strong>自定研究课题，完成文献调查→实验设计→数据分析→论文/报告</li>
+                <li><strong>复杂工程：</strong>从矿石冶炼金属、制作弩机并分析对战争的影响、设计并制作复杂机械装置</li>
+                <li><strong>技术深入：</strong>编程项目（如传感器+编程做自动装置）、3D建模与打印</li>
+                <li><strong>科学史探索：</strong>重走科学家的发现之路——不仅知道结论，理解发现过程</li>
+                <li><strong>跨学科综合项目：</strong>将科学/技术/人文/艺术高度融合的大型项目</li>
+              </ul>
+            </div>
+            <div class="cell-section">
+              <h5>活动形式</h5>
+              <ul>
+                <li>长周期项目（2-4周），高度自主</li>
+                <li>教师是顾问而非指导者</li>
+                <li>正式的研究报告和学术展示</li>
+                <li>鼓励与外部专家/机构的交流</li>
+              </ul>
+            </div>
+            <div class="cell-section">
+              <h5>示例课题</h5>
+              <div class="cell-examples">
+                <span>⚒️ "从矿石到青铜器" — 冶金术的历史与实践</span>
+                <span>🤖 "设计一个智能装置" — 传感器+编程综合项目</span>
+                <span>📡 "两山之间的通信" — 光通信系统设计与验证</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== G5-G6 · 人文与思辨 ===== -->
+        <div class="matrix-cell" data-cell-age="10-12" data-cell-mod="humanities">
+          <div class="cell-header">
+            <span class="cell-age-tag age-10-12">G5-G6</span>
+            <span class="cell-mod-tag mod-humanities">📚 人文与思辨</span>
+          </div>
+          <h4 class="cell-title">公民觉醒</h4>
+          <p class="cell-theme">运用同理心理解他人需求，发起并执行社会行动，在复杂项目中协调资源，理解权利与责任的平衡</p>
+          <div class="cell-body">
+            <div class="cell-section">
+              <h5>能力目标</h5>
+              <ul class="ability-targets">
+                <li><strong>同理视角</strong> — 能够从他人角度思考问题与需求</li>
+                <li><strong>社会行动</strong> — 参与或设计具有实际影响力的公益项目</li>
+                <li><strong>公民意识</strong> — 理解个人权利与社会责任的平衡</li>
+                <li><strong>项目管理</strong> — 在复杂任务中进行分工、协调与资源整合</li>
+              </ul>
+            </div>
+            <div class="cell-section">
+              <h5>内容方向</h5>
+              <ul>
+                <li><strong>深度历史分析：</strong>从多角度理解历史转折点——工业革命/殖民主义/文明冲突，链接到当代社会</li>
+                <li><strong>哲学启蒙：</strong>「什么是自由？」「什么是正义？」「科技一定让生活更好吗？」</li>
+                <li><strong>社会议题探究：</strong>环境保护、贫富差距、数字时代的隐私——独立研究并公开演讲</li>
+                <li><strong>批判性阅读：</strong>深度阅读非虚构作品，学会辨别事实与观点、识别偏见</li>
+                <li><strong>正式演讲与辩论：</strong>结构化的辩论赛，限时演讲，学会在压力下清晰表达</li>
+              </ul>
+            </div>
+            <div class="cell-section">
+              <h5>活动形式</h5>
+              <ul>
+                <li>学生主导讨论，教师做苏格拉底式引导</li>
+                <li>独立研究报告 + 正式演讲展示</li>
+                <li>正式辩论赛（有规则、有评分、有压力）</li>
+                <li>鼓励形成并捍卫自己的观点，同时尊重不同意见</li>
+              </ul>
+            </div>
+            <div class="cell-section">
+              <h5>示例课题</h5>
+              <div class="cell-examples">
+                <span>🌐 "全球化好还是不好？" — 深度辩论赛</span>
+                <span>🔎 "这条新闻是真的吗？" — 媒体素养与批判性阅读</span>
+                <span>🏛️ "如果我来设计一个国家" — 政治哲学与公民意识</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== G5-G6 · 玩耍与体育 ===== -->
+        <div class="matrix-cell" data-cell-age="10-12" data-cell-mod="play">
+          <div class="cell-header">
+            <span class="cell-age-tag age-10-12">G5-G6</span>
+            <span class="cell-mod-tag mod-play">⚽ 玩耍与体育</span>
+          </div>
+          <h4 class="cell-title">综合素养</h4>
+          <p class="cell-theme">具备多样化运动能力与体能储备，在公平竞争中运用规则与战术，能够带领低龄儿童安全运动</p>
+          <div class="cell-body">
+            <div class="cell-section">
+              <h5>能力目标</h5>
+              <ul class="ability-targets">
+                <li><strong>综合素养</strong> — 具备良好的体能储备与多样化的运动能力</li>
+                <li><strong>公平竞争</strong> — 运用规则制定策略，具备竞赛精神</li>
+                <li><strong>战术执行</strong> — 在团队运动中根据战术调整自己的角色</li>
+                <li><strong>带领指导</strong> — 能够为低龄儿童示范并引导安全运动</li>
+              </ul>
+            </div>
+            <div class="cell-section">
+              <h5>内容方向</h5>
+              <ul>
+                <li><strong>高水平团队竞技：</strong>篮球/足球系统训练和对抗赛，学习教练战术</li>
+                <li><strong>高强度对抗：</strong>正式规则的摔跤/拳击训练——在激烈对抗中保持冷静和尊重</li>
+                <li><strong>极限挑战：</strong>长距离越野、高难度障碍赛——真正挑战身体和心理极限</li>
+                <li><strong>领导力实践：</strong>担任队长/教练/裁判角色，带领低年级同学</li>
+                <li><strong>赛事组织：</strong>学生自主策划和组织校内运动会或联赛</li>
+              </ul>
+            </div>
+            <div class="cell-section">
+              <h5>活动形式</h5>
+              <ul>
+                <li>系统化的训练计划和比赛安排</li>
+                <li>赛后分析会——数据分析、战术复盘</li>
+                <li>轮流担任领导角色</li>
+                <li>学生自主裁定争议和冲突</li>
+              </ul>
+            </div>
+            <div class="cell-section">
+              <h5>示例课题</h5>
+              <div class="cell-examples">
+                <span>🏆 "星与土联赛" — 学生自主组织的体育联赛</span>
+                <span>🥋 "武士之道" — 格斗精神与自我控制</span>
+                <span>🏔️ "极限挑战日" — 突破身心极限的耐力赛</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== G5-G6 · 自然与生活 ===== -->
+        <div class="matrix-cell" data-cell-age="10-12" data-cell-mod="nature">
+          <div class="cell-header">
+            <span class="cell-age-tag age-10-12">G5-G6</span>
+            <span class="cell-mod-tag mod-nature">🌿 自然与生活</span>
+          </div>
+          <h4 class="cell-title">独立担当</h4>
+          <p class="cell-theme">独立策划执行完整项目，掌握综合生活技能，深度参与自然生态项目，形成对社会现象的独立见解</p>
+          <div class="cell-body">
+            <div class="cell-section">
+              <h5>能力目标</h5>
+              <ul class="ability-targets">
+                <li><strong>独立策划</strong> — 完成从计划到执行的全流程组织</li>
+                <li><strong>生活应对</strong> — 掌握应对日常常见问题的综合生活技能</li>
+                <li><strong>深度参与</strong> — 参与生态或自然项目，理解人与自然的关系</li>
+                <li><strong>调研分析</strong> — 对社会或生活现象进行调查并形成见解</li>
+              </ul>
+            </div>
+            <div class="cell-section">
+              <h5>内容方向</h5>
+              <ul>
+                <li><strong>高级烹饪与营养：</strong>独立制作完整的中式/西式餐食（如从黄豆制作豆腐），理解营养学基础</li>
+                <li><strong>独立营地管理：</strong>5天营地课中担任组长，自主管理团队的生活起居和活动安排</li>
+                <li><strong>野外生存：</strong>辨识可食用植物、搭建庇护所、取火、简单急救</li>
+                <li><strong>环境与生态：</strong>深度生态调研项目——对某个环境问题进行独立研究并提出解决方案</li>
+                <li><strong>社会参与：</strong>策划和执行社区公益项目——从发现问题到组织行动</li>
+              </ul>
+            </div>
+            <div class="cell-section">
+              <h5>活动形式</h5>
+              <ul>
+                <li>教师完全退居幕后，学生自主决策</li>
+                <li>营地课中教师只在安全问题上介入</li>
+                <li>研学项目需要完整的调研报告</li>
+                <li>社区项目从策划到执行完全由学生负责</li>
+              </ul>
+            </div>
+            <div class="cell-section">
+              <h5>示例课题</h5>
+              <div class="cell-examples">
+                <span>🫘 "从黄豆到豆腐" — 传统食物制作的科学与文化</span>
+                <span>🌲 "我们的生态报告" — 深度生态系统调研项目</span>
+                <span>🤲 "让社区更好" — 学生策划的公益行动项目</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Standards -->
+  <section id="standards" class="section section-alt">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-number">04</span>
+        <h2>课程质量评价标准</h2>
+        <p class="section-desc">五个维度、三个等级，清晰量化课程质量</p>
+      </div>
+
+      <div class="standards-intro">
+        <div class="rating-legend">
+          <div class="rating-item rating-excellent"><span class="rating-dot"></span>优秀 (A) — 可直接投入使用</div>
+          <div class="rating-item rating-pass"><span class="rating-dot"></span>合格 (B) — 修改后可使用</div>
+          <div class="rating-item rating-fail"><span class="rating-dot"></span>不合格 (C) — 需要重新设计</div>
+        </div>
+      </div>
+
+      <div class="standards-accordion">
+        <!-- Dimension 1 -->
+        <div class="accordion-item">
+          <button class="accordion-header" aria-expanded="false">
+            <span class="accordion-dim">维度一</span>
+            <span class="accordion-title">教育目标对齐度</span>
+            <span class="accordion-weight">权重 25%</span>
+            <svg class="accordion-arrow" viewBox="0 0 24 24" width="20" height="20"><polyline points="6 9 12 15 18 9" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+          </button>
+          <div class="accordion-body">
+            <table class="standards-table">
+              <thead><tr><th>等级</th><th>描述</th></tr></thead>
+              <tbody>
+                <tr class="row-excellent"><td>优秀 A</td><td>课程清晰对应星与土教育总目标（关键能力 + 思维精神 + 身心健康），能明确说出培养哪几项能力/素质。课程内容与教育目标高度一致，每个环节都有明确的目标映射。</td></tr>
+                <tr class="row-pass"><td>合格 B</td><td>课程能对应部分教育目标，但目标映射不够清晰或覆盖面不足。部分环节的设计目的不明确。</td></tr>
+                <tr class="row-fail"><td>不合格 C</td><td>课程没有明确的教育目标映射，或与星与土的教育理念矛盾（如：强化应试思维、灌输标准答案、过度保护学生）。</td></tr>
+              </tbody>
+            </table>
+            <div class="red-flags">
+              <h5>🚩 红线标志（出现即为不合格）</h5>
+              <ul>
+                <li>课程设计以"让孩子得到正确答案"为最终目的</li>
+                <li>课程内容只是复制学校已有的教学内容</li>
+                <li>无法回答"这门课培养了孩子什么学校里培养不了的能力"</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dimension 2 -->
+        <div class="accordion-item">
+          <button class="accordion-header" aria-expanded="false">
+            <span class="accordion-dim">维度二</span>
+            <span class="accordion-title">PBL方法论落实度</span>
+            <span class="accordion-weight">权重 25%</span>
+            <svg class="accordion-arrow" viewBox="0 0 24 24" width="20" height="20"><polyline points="6 9 12 15 18 9" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+          </button>
+          <div class="accordion-body">
+            <table class="standards-table">
+              <thead><tr><th>等级</th><th>描述</th></tr></thead>
+              <tbody>
+                <tr class="row-excellent"><td>优秀 A</td><td>完整运用 PBL 五步框架。驱动问题真实、开放且有吸引力。学生自主探索时间 ≥ 70%。有明确的展示和反思环节。教师角色定位为引导者而非讲授者。</td></tr>
+                <tr class="row-pass"><td>合格 B</td><td>采用了 PBL 框架但执行不完整（如缺少反思环节或驱动问题不够开放）。学生自主探索时间 50%-70%。</td></tr>
+                <tr class="row-fail"><td>不合格 C</td><td>实质上是传统讲授式教学包装成项目课。教师讲授 > 50%。没有真正的驱动问题，学生按照教师给定的步骤照做。</td></tr>
+              </tbody>
+            </table>
+            <div class="red-flags">
+              <h5>🚩 红线标志</h5>
+              <ul>
+                <li>教师给出完整操作步骤让学生照做</li>
+                <li>所有学生被要求做出一模一样的成果</li>
+                <li>没有给学生犯错和重新尝试的机会</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dimension 3 -->
+        <div class="accordion-item">
+          <button class="accordion-header" aria-expanded="false">
+            <span class="accordion-dim">维度三</span>
+            <span class="accordion-title">教育过程原则践行度</span>
+            <span class="accordion-weight">权重 25%</span>
+            <svg class="accordion-arrow" viewBox="0 0 24 24" width="20" height="20"><polyline points="6 9 12 15 18 9" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+          </button>
+          <div class="accordion-body">
+            <table class="standards-table">
+              <thead><tr><th>等级</th><th>描述</th></tr></thead>
+              <tbody>
+                <tr class="row-excellent"><td>优秀 A</td><td><strong>尊重：</strong>课程设计尊重学生差异，不要求统一结果，给予选择空间，同时不回避对学生的严格要求。<br><strong>自主探索：</strong>过程设计丰富，允许不同路径达到目标。<br><strong>走出舒适区：</strong>有刻意设计的挑战环节，对学生有适度压力。</td></tr>
+                <tr class="row-pass"><td>合格 B</td><td>部分体现三大原则，但在某些方面不足。如：给了选择空间但缺少挑战设计；或有挑战但缺少尊重学生个性的设计。</td></tr>
+                <tr class="row-fail"><td>不合格 C</td><td>违反核心原则。如：对所有学生一刀切要求、过度保护不让孩子面对任何困难、纯放养不加任何引导。</td></tr>
+              </tbody>
+            </table>
+            <div class="red-flags">
+              <h5>🚩 红线标志</h5>
+              <ul>
+                <li>课程全程无难度梯度，所有学生轻松完成</li>
+                <li>对学生犯错采取批评或惩罚态度</li>
+                <li>用物质奖励或外部评判驱动学生</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dimension 4 -->
+        <div class="accordion-item">
+          <button class="accordion-header" aria-expanded="false">
+            <span class="accordion-dim">维度四</span>
+            <span class="accordion-title">年龄适配度与内容质量</span>
+            <span class="accordion-weight">权重 15%</span>
+            <svg class="accordion-arrow" viewBox="0 0 24 24" width="20" height="20"><polyline points="6 9 12 15 18 9" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+          </button>
+          <div class="accordion-body">
+            <table class="standards-table">
+              <thead><tr><th>等级</th><th>描述</th></tr></thead>
+              <tbody>
+                <tr class="row-excellent"><td>优秀 A</td><td>内容难度精准匹配目标年龄段认知水平，活动形式符合该年龄段特征。内容有深度，选材有品质，能激发好奇心。跨学科联系自然流畅。</td></tr>
+                <tr class="row-pass"><td>合格 B</td><td>内容基本适合目标年龄段，但在难度梯度或活动形式上有偏差。内容质量一般。</td></tr>
+                <tr class="row-fail"><td>不合格 C</td><td>内容明显不适合目标年龄段（过难或过简单）。选材粗糙或不准确。活动形式不符合年龄特征。</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Dimension 5 -->
+        <div class="accordion-item">
+          <button class="accordion-header" aria-expanded="false">
+            <span class="accordion-dim">维度五</span>
+            <span class="accordion-title">教案完整性与可操作性</span>
+            <span class="accordion-weight">权重 10%</span>
+            <svg class="accordion-arrow" viewBox="0 0 24 24" width="20" height="20"><polyline points="6 9 12 15 18 9" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+          </button>
+          <div class="accordion-body">
+            <table class="standards-table">
+              <thead><tr><th>等级</th><th>描述</th></tr></thead>
+              <tbody>
+                <tr class="row-excellent"><td>优秀 A</td><td>教案结构完整（目标、流程、时间、材料、评估一应俱全），其他教师拿到教案可以独立实施。关键提问和引导话术具体可用。</td></tr>
+                <tr class="row-pass"><td>合格 B</td><td>教案基本完整但部分环节描述不够详细，需要口头补充才能实施。</td></tr>
+                <tr class="row-fail"><td>不合格 C</td><td>教案只有粗略大纲，缺少关键信息，其他教师无法独立实施。</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scoring -->
+      <div class="scoring-summary">
+        <h4>综合评定规则</h4>
+        <div class="scoring-rules">
+          <div class="score-rule rule-pass">
+            <span class="rule-icon">✅</span>
+            <div>
+              <strong>通过标准</strong>
+              <p>五个维度均达到 B 级及以上，且维度一、二、三中至少两个达到 A 级</p>
+            </div>
+          </div>
+          <div class="score-rule rule-fail">
+            <span class="rule-icon">❌</span>
+            <div>
+              <strong>一票否决</strong>
+              <p>维度一、二、三中任何一个维度出现红线标志，整体评定为不合格</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Checklist -->
+  <section id="checklist" class="section section-alt">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-number">05</span>
+        <h2>课程自查清单</h2>
+        <p class="section-desc">提交评审前，教师需完成以下自查（交互式，可勾选）</p>
+      </div>
+
+      <div class="checklist-container">
+        <div class="checklist-progress">
+          <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+          </div>
+          <span class="progress-text" id="progress-text">0 / 20 项已确认</span>
+        </div>
+
+        <div class="checklist-group">
+          <h4>🎯 教育目标</h4>
+          <label class="check-item"><input type="checkbox" class="check-input"><span class="check-mark"></span><span>我能清晰说出这门课培养孩子的哪些具体能力和素质</span></label>
+          <label class="check-item"><input type="checkbox" class="check-input"><span class="check-mark"></span><span>这门课锻炼的能力是学校教育无法充分提供的</span></label>
+          <label class="check-item"><input type="checkbox" class="check-input"><span class="check-mark"></span><span>课程不会强化应试思维或标准答案思维</span></label>
+          <label class="check-item"><input type="checkbox" class="check-input"><span class="check-mark"></span><span>课程目标与星与土的总目标一致</span></label>
+        </div>
+
+        <div class="checklist-group">
+          <h4>📋 PBL 方法论</h4>
+          <label class="check-item"><input type="checkbox" class="check-input"><span class="check-mark"></span><span>课程有一个真实的、开放性的驱动问题</span></label>
+          <label class="check-item"><input type="checkbox" class="check-input"><span class="check-mark"></span><span>学生自主探索和动手实践的时间 ≥ 70%</span></label>
+          <label class="check-item"><input type="checkbox" class="check-input"><span class="check-mark"></span><span>没有给学生完整的操作步骤让其照做</span></label>
+          <label class="check-item"><input type="checkbox" class="check-input"><span class="check-mark"></span><span>课程包含展示和反思环节</span></label>
+          <label class="check-item"><input type="checkbox" class="check-input"><span class="check-mark"></span><span>允许并鼓励学生产出不同的结果</span></label>
+        </div>
+
+        <div class="checklist-group">
+          <h4>🌱 教育过程</h4>
+          <label class="check-item"><input type="checkbox" class="check-input"><span class="check-mark"></span><span>课程设计尊重学生差异，不要求统一结果</span></label>
+          <label class="check-item"><input type="checkbox" class="check-input"><span class="check-mark"></span><span>有专门设计的走出舒适区的挑战环节</span></label>
+          <label class="check-item"><input type="checkbox" class="check-input"><span class="check-mark"></span><span>给学生犯错和重新尝试的空间</span></label>
+          <label class="check-item"><input type="checkbox" class="check-input"><span class="check-mark"></span><span>没有使用物质奖励或排名来激励学生</span></label>
+        </div>
+
+        <div class="checklist-group">
+          <h4>👶 年龄适配</h4>
+          <label class="check-item"><input type="checkbox" class="check-input"><span class="check-mark"></span><span>内容难度和活动形式匹配目标年龄段</span></label>
+          <label class="check-item"><input type="checkbox" class="check-input"><span class="check-mark"></span><span>有分层挑战设计（基础/进阶/拓展）</span></label>
+          <label class="check-item"><input type="checkbox" class="check-input"><span class="check-mark"></span><span>活动时长符合该年龄段的注意力特征</span></label>
+        </div>
+
+        <div class="checklist-group">
+          <h4>📝 教案质量</h4>
+          <label class="check-item"><input type="checkbox" class="check-input"><span class="check-mark"></span><span>教案包含：目标、流程、时间分配、材料清单</span></label>
+          <label class="check-item"><input type="checkbox" class="check-input"><span class="check-mark"></span><span>写明了教师的关键提问和引导话术</span></label>
+          <label class="check-item"><input type="checkbox" class="check-input"><span class="check-mark"></span><span>其他教师拿到这份教案可以独立实施</span></label>
+          <label class="check-item"><input type="checkbox" class="check-input"><span class="check-mark"></span><span>包含形成性评估方式（非传统考试）</span></label>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Examples -->
+  <section id="examples" class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-number">06</span>
+        <h2>好课 vs 坏课 案例对比</h2>
+        <p class="section-desc">通过具体案例理解什么是好的课程设计</p>
+      </div>
+
+      <div class="comparison-cards">
+        <div class="comp-card">
+          <h4>案例一：弓箭制作课</h4>
+          <div class="comp-grid">
+            <div class="comp-good">
+              <div class="comp-badge good">✓ 好的设计</div>
+              <h5>驱动问题</h5>
+              <p>"如何制作一把弓箭，并了解弓箭在人类社会发展中起的作用？"</p>
+              <h5>过程设计</h5>
+              <ul>
+                <li>先讨论：古人为什么需要弓箭？弓箭带来了什么变化？</li>
+                <li>学生自主探索不同材料和结构的弹性</li>
+                <li>小组讨论设计方案，动手制作</li>
+                <li>在院子里测试，记录数据，迭代改进</li>
+                <li>最后比赛 + 反思分享</li>
+              </ul>
+              <h5>走出舒适区</h5>
+              <p>射箭比赛的竞争压力，面对失败的勇气</p>
+            </div>
+            <div class="comp-bad">
+              <div class="comp-badge bad">✗ 差的设计</div>
+              <h5>驱动问题</h5>
+              <p>"今天我们来做一把弓箭"（没有真正的问题）</p>
+              <h5>过程设计</h5>
+              <ul>
+                <li>教师讲解弓箭的历史（30分钟PPT）</li>
+                <li>按照步骤图发材料包让学生照做</li>
+                <li>所有人做出一模一样的弓箭</li>
+                <li>拍照留念结束</li>
+              </ul>
+              <h5>问题</h5>
+              <p>本质是手工课，没有自主探索，没有挑战，没有反思</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="comp-card">
+          <h4>案例二：浮力原理课（G3-G4）</h4>
+          <div class="comp-grid">
+            <div class="comp-good">
+              <div class="comp-badge good">✓ 好的设计</div>
+              <h5>驱动问题</h5>
+              <p>"为什么有些东西浮在水面，有些沉下去？你能让一块黏土浮起来吗？"</p>
+              <h5>过程设计</h5>
+              <ul>
+                <li>学生预测各种物体的浮沉，然后实验验证</li>
+                <li>讲述阿基米德发现浮力定律的故事——引发讨论：他为什么能发现？</li>
+                <li>挑战：用黏土设计一艘能承载最多重量的船</li>
+                <li>迭代测试——失败了改进设计再试</li>
+                <li>小组展示：你的设计原理是什么？</li>
+              </ul>
+            </div>
+            <div class="comp-bad">
+              <div class="comp-badge bad">✗ 差的设计</div>
+              <h5>驱动问题</h5>
+              <p>无驱动问题，直接开始"讲解阿基米德原理"</p>
+              <h5>过程设计</h5>
+              <ul>
+                <li>教师讲解浮力公式（40分钟）</li>
+                <li>教师做一个演示实验，学生看</li>
+                <li>让学生记录实验现象</li>
+                <li>做几道计算题巩固</li>
+              </ul>
+              <h5>问题</h5>
+              <p>完全是学校物理课的翻版，违背了星与土的所有理念</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="comp-card">
+          <h4>案例三：户外对抗游戏课（G1-G2）</h4>
+          <div class="comp-grid">
+            <div class="comp-good">
+              <div class="comp-badge good">✓ 好的设计</div>
+              <h5>教育目标</h5>
+              <p>培养勇气、面对冲突的能力、体育精神</p>
+              <h5>过程设计</h5>
+              <ul>
+                <li>热身游戏引入身体对抗的概念</li>
+                <li>讨论"什么是勇敢？害怕了怎么办？"</li>
+                <li>渐进式对抗：互扔沙包 → 单腿斗鸡 → 安全摔跤</li>
+                <li>输了也要和对手击掌——体育精神的仪式</li>
+                <li>反思：今天你勇敢了吗？哪一刻你克服了害怕？</li>
+              </ul>
+            </div>
+            <div class="comp-bad">
+              <div class="comp-badge bad">✗ 差的设计</div>
+              <h5>教育目标</h5>
+              <p>"让孩子们玩得开心"（目标模糊）</p>
+              <h5>过程设计</h5>
+              <ul>
+                <li>自由玩耍一小时</li>
+                <li>没有规则说明和安全引导</li>
+                <li>没有引导反思和品格讨论</li>
+                <li>有孩子受伤或害怕时直接叫停</li>
+              </ul>
+              <h5>问题</h5>
+              <p>纯放养=放弃教育功能，过度保护=剥夺成长机会</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <span class="logo-star">星</span><span class="logo-amp">与</span><span class="logo-earth">土</span>
+          <p>深圳 · 创新教育</p>
+        </div>
+        <div class="footer-info">
+          <p>本指南为星与土内部课程开发文件，用于指导课程设计与质量评估</p>
+          <p class="footer-note">版本 1.0 · 2026年3月</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Login Modal (must login before viewing) -->
+  <div class="identity-modal-overlay" id="identity-modal" style="display:none">
+    <div class="identity-modal">
+      <div class="identity-modal-icon">🔐</div>
+      <h3 id="identity-modal-title">登录 / 注册</h3>
+      <p id="identity-modal-desc">请输入姓名和密码</p>
+      <input type="text" class="form-input" id="identity-name" placeholder="你的姓名" autocomplete="username" style="margin:12px 0 8px;text-align:center">
+      <input type="password" class="form-input" id="identity-password" placeholder="设置密码（首次为注册）" autocomplete="current-password" style="margin:0 0 8px;text-align:center">
+      <div style="display:flex;gap:8px">
+        <select class="form-select" id="identity-role" style="flex:1">
+          <option value="teacher">教师</option>
+          <option value="ops">运营</option>
+          <option value="admin">管理</option>
+        </select>
+      </div>
+      <div id="admin-key-wrap" style="display:none;margin-top:8px"><input type="password" class="form-input" id="admin-key" placeholder="请输入管理员密钥" style="text-align:center"></div>
+      <div id="invite-code-wrap" style="display:none;margin-top:8px"><input type="text" class="form-input" id="invite-code" placeholder="请输入机构邀请码" style="text-align:center"></div>
+      <div id="identity-error" style="color:#e17055;font-size:0.8rem;margin-top:8px;min-height:20px"></div>
+      <button class="btn-submit-review" id="identity-confirm" style="margin-top:8px;width:100%" disabled>登录 / 注册</button>
+      <p id="identity-hint" style="font-size:0.72rem;color:var(--text-muted);margin-top:10px">首次输入姓名将自动注册，再次登录需输入正确密码</p>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-client.js"></script>
+  <script src="user-identity.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
