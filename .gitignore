@@ -1,3 +1,23 @@
-# Local Netlify folder
+# Local dev folders
 .netlify
 .vercel
+
+# macOS
+.DS_Store
+.DS_Store?
+
+# Logs
+*.log
+npm-debug.log*
+
+# Node
+node_modules/
+
+# Environment variables (never commit secrets)
+.env
+.env.local
+.env.production
+
+# Editor
+.vscode/
+.idea/

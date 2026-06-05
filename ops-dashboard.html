@@ -384,6 +384,148 @@
       color: var(--text-secondary);
       margin-left: 6px;
     }
+
+    /* ---- Referral Panel ---- */
+    .referral-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    @media (max-width: 768px) { .referral-stats { grid-template-columns: 1fr 1fr; } }
+    .ref-stat-box {
+      background: var(--surface, rgba(255,255,255,0.04));
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px 16px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .ref-stat-box::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      border-radius: 14px 14px 0 0;
+    }
+    .ref-stat-box.purple::before { background: linear-gradient(90deg, #6366f1, #8b5cf6); }
+    .ref-stat-box.green::before  { background: linear-gradient(90deg, #10b981, #34d399); }
+    .ref-stat-box.amber::before  { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+    .ref-stat-box.pink::before   { background: linear-gradient(90deg, #ec4899, #f472b6); }
+    .ref-stat-num {
+      font-size: 1.7rem;
+      font-weight: 900;
+      font-family: var(--font-serif);
+      margin-bottom: 4px;
+    }
+    .ref-stat-label {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+    /* Referral table */
+    .referral-table-wrap {
+      overflow-x: auto;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+    }
+    .referral-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+      min-width: 720px;
+    }
+    .referral-table thead th {
+      background: rgba(255,255,255,0.03);
+      color: var(--text-muted);
+      font-weight: 700;
+      font-size: 0.74rem;
+      padding: 12px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    .referral-table tbody tr {
+      transition: background 0.15s;
+    }
+    .referral-table tbody tr:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .referral-table tbody td {
+      padding: 11px 14px;
+      color: var(--text);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      vertical-align: middle;
+    }
+    .ref-status-badge {
+      display: inline-block;
+      font-size: 0.68rem;
+      padding: 2px 8px;
+      border-radius: 8px;
+      font-weight: 700;
+    }
+    .ref-status-paid    { background: rgba(16,185,129,0.15); color: #34d399; }
+    .ref-status-pending { background: rgba(245,158,11,0.15); color: #fbbf24; }
+    .ref-status-lost    { background: rgba(148,163,184,0.12); color: #94a3b8; }
+    .ref-reward-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.68rem;
+      padding: 2px 8px;
+      border-radius: 8px;
+      font-weight: 600;
+    }
+    .ref-reward-done  { background: rgba(16,185,129,0.12); color: #34d399; }
+    .ref-reward-none  { background: rgba(239,68,68,0.1); color: #f87171; }
+    .ref-reward-na    { background: rgba(148,163,184,0.1); color: #94a3b8; }
+    /* Leaderboard */
+    .referral-leader {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .referral-leader-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      transition: background 0.2s;
+    }
+    .referral-leader-item:hover { background: rgba(255,255,255,0.04); }
+    .referral-leader-rank {
+      font-size: 1.1rem;
+      font-weight: 900;
+      width: 28px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .referral-leader-name {
+      flex: 1;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .referral-leader-count {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+    }
+    .referral-leader-bar {
+      flex: 2;
+      height: 6px;
+      background: var(--border);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .referral-leader-bar-fill {
+      height: 100%;
+      border-radius: 3px;
+      background: linear-gradient(90deg, #6366f1, #8b5cf6);
+      transition: width 0.6s ease;
+    }
   </style>
 </head>
 <body>
@@ -410,6 +552,7 @@
     <div class="tabs-container">
       <button class="tab-btn active" onclick="switchTab('dashboard')" id="tab-dashboard">📊 招生运营看板</button>
       <button class="tab-btn" onclick="switchTab('leads')" id="tab-leads">👤 家长拓客跟进</button>
+      <button class="tab-btn" onclick="switchTab('referral')" id="tab-referral">🤝 转介绍管理</button>
     </div>
 
     <!-- Tab 1: Dashboard Panel -->
@@ -530,7 +673,199 @@
         </div>
       </div>
     </div> <!-- End panel-leads -->
+
+    <!-- Tab 3: Referral Management -->
+    <div id="panel-referral" style="display:none">
+
+      <!-- Stats Row -->
+      <div class="referral-stats">
+        <div class="ref-stat-box purple">
+          <div class="ref-stat-num" id="ref-sum-total" style="color:#818cf8">0</div>
+          <div class="ref-stat-label">总转介绍记录</div>
+        </div>
+        <div class="ref-stat-box green">
+          <div class="ref-stat-num" id="ref-sum-paid" style="color:#34d399">0</div>
+          <div class="ref-stat-label">已缴费转化</div>
+        </div>
+        <div class="ref-stat-box amber">
+          <div class="ref-stat-num" id="ref-sum-conv" style="color:#fbbf24">0%</div>
+          <div class="ref-stat-label">转介绍转化率</div>
+        </div>
+        <div class="ref-stat-box pink">
+          <div class="ref-stat-num" id="ref-sum-reward" style="color:#f472b6">0</div>
+          <div class="ref-stat-label">待发放奖励</div>
+        </div>
+      </div>
+
+      <!-- Action Bar -->
+      <div class="dash-card dash-full" style="margin-bottom:20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+        <div>
+          <h3 style="margin:0; font-size:1.05rem;">🤝 家长转介绍记录台账</h3>
+          <p style="font-size:0.78rem;color:var(--text-muted);margin:4px 0 0">记录每一笔老生家长转介绍，跟踪转化进度与奖励发放</p>
+        </div>
+        <button class="ops-save" onclick="openAddReferralModal()" style="display:flex;align-items:center;gap:6px;margin:0">➕ 新增转介绍</button>
+      </div>
+
+      <!-- Two-column layout: table + leaderboard -->
+      <div style="display:grid;grid-template-columns:1fr 320px;gap:20px;align-items:start;" id="ref-grid">
+
+        <!-- Table -->
+        <div class="dash-card" style="padding:0;overflow:hidden;">
+          <!-- Filter bar -->
+          <div style="display:flex;gap:8px;flex-wrap:wrap;padding:14px 16px;border-bottom:1px solid var(--border);">
+            <select class="form-select" id="ref-filter-status" onchange="renderReferralPanel()" style="font-size:0.78rem;padding:5px 10px;border-radius:8px;">
+              <option value="">全部状态</option>
+              <option value="paid">已缴费</option>
+              <option value="pending">跟进中</option>
+              <option value="lost">已流失</option>
+            </select>
+            <select class="form-select" id="ref-filter-reward" onchange="renderReferralPanel()" style="font-size:0.78rem;padding:5px 10px;border-radius:8px;">
+              <option value="">全部奖励状态</option>
+              <option value="false">奖励未发放</option>
+              <option value="true">奖励已发放</option>
+            </select>
+            <input type="text" id="ref-filter-search" class="form-input" oninput="renderReferralPanel()" placeholder="🔍 搜索姓名..." style="font-size:0.78rem;padding:5px 10px;border-radius:8px;width:140px;">
+          </div>
+          <!-- Table -->
+          <div class="referral-table-wrap" style="border:none;border-radius:0;">
+            <table class="referral-table">
+              <thead>
+                <tr>
+                  <th>介绍人（老生家长）</th>
+                  <th>被介绍人（新家长）</th>
+                  <th>转介绍日期</th>
+                  <th>跟进状态</th>
+                  <th>奖励类型</th>
+                  <th>奖励状态</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody id="referral-table-body">
+                <tr><td colspan="7" style="text-align:center;padding:40px;color:var(--text-muted);font-size:0.82rem;">暂无转介绍记录，点击「➕ 新增转介绍」开始记录</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Leaderboard -->
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <!-- Referrer leaderboard -->
+          <div class="dash-card">
+            <h3 style="margin-bottom:14px;">🏆 转介绍达人排行</h3>
+            <div class="referral-leader" id="ref-leaderboard">
+              <div style="text-align:center;color:var(--text-muted);font-size:0.8rem;padding:20px 0;">暂无数据</div>
+            </div>
+          </div>
+          <!-- Reward summary -->
+          <div class="dash-card">
+            <h3 style="margin-bottom:14px;">🎁 奖励发放汇总</h3>
+            <div id="ref-reward-summary" style="font-size:0.82rem;color:var(--text-secondary);">
+              <div style="text-align:center;padding:20px 0;color:var(--text-muted);">暂无奖励记录</div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- end ref-grid -->
+    </div> <!-- End panel-referral -->
   </main>
+
+  <!-- Add/Edit Referral Modal -->
+  <div class="leads-modal" id="modal-referral-form">
+    <div class="leads-modal-content">
+      <div class="leads-modal-header">
+        <h3 class="leads-modal-title" id="ref-form-title">新增转介绍记录</h3>
+        <button class="leads-modal-close" onclick="closeReferralModal()">×</button>
+      </div>
+      <form id="referral-form" onsubmit="saveReferralForm(event)">
+        <input type="hidden" id="ref-id">
+        <p style="font-size:0.78rem;color:var(--text-muted);margin:0 0 14px;padding:8px 12px;background:rgba(99,102,241,0.07);border-radius:8px;border-left:3px solid #6366f1;">📌 请填写「是谁介绍了谁」的信息，帮助追踪老生口碑传播效果。</p>
+
+        <div style="background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:14px;">
+          <p style="font-size:0.75rem;font-weight:700;color:#818cf8;margin:0 0 10px;">👤 介绍人（现有老生家长）</p>
+          <div style="display:flex;gap:12px;">
+            <div class="form-group" style="flex:1;margin-bottom:0;">
+              <label class="form-label" style="font-size:0.78rem;">姓名 <span class="required">*</span></label>
+              <input type="text" class="form-input" id="ref-referrer-name" required placeholder="例如：李妈妈" style="width:100%;box-sizing:border-box;" list="referrer-name-list">
+              <datalist id="referrer-name-list"></datalist>
+            </div>
+            <div class="form-group" style="flex:1;margin-bottom:0;">
+              <label class="form-label" style="font-size:0.78rem;">联系电话</label>
+              <input type="tel" class="form-input" id="ref-referrer-phone" placeholder="选填" style="width:100%;box-sizing:border-box;">
+            </div>
+          </div>
+        </div>
+
+        <div style="background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:14px;">
+          <p style="font-size:0.75rem;font-weight:700;color:#34d399;margin:0 0 10px;">🆕 被介绍人（新家长）</p>
+          <div style="display:flex;gap:12px;">
+            <div class="form-group" style="flex:1;margin-bottom:0;">
+              <label class="form-label" style="font-size:0.78rem;">姓名 <span class="required">*</span></label>
+              <input type="text" class="form-input" id="ref-referree-name" required placeholder="例如：王爸爸" style="width:100%;box-sizing:border-box;">
+            </div>
+            <div class="form-group" style="flex:1;margin-bottom:0;">
+              <label class="form-label" style="font-size:0.78rem;">联系电话</label>
+              <input type="tel" class="form-input" id="ref-referree-phone" placeholder="选填" style="width:100%;box-sizing:border-box;">
+            </div>
+          </div>
+          <div style="margin-top:10px;">
+            <label class="form-label" style="font-size:0.78rem;">关联家长名单 <span style="color:var(--text-muted);font-weight:400;">(可选，自动带入信息)</span></label>
+            <select class="form-select" id="ref-lead-id" onchange="onRefLeadSelect()" style="width:100%;box-sizing:border-box;">
+              <option value="">— 不关联 —</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
+          <div class="form-group" style="margin-bottom:0;">
+            <label class="form-label" style="font-size:0.78rem;">转介绍日期 <span class="required">*</span></label>
+            <input type="date" class="form-input" id="ref-date" required style="width:100%;box-sizing:border-box;">
+          </div>
+          <div class="form-group" style="margin-bottom:0;">
+            <label class="form-label" style="font-size:0.78rem;">跟进状态</label>
+            <select class="form-select" id="ref-status" style="width:100%;box-sizing:border-box;">
+              <option value="pending">跟进中</option>
+              <option value="paid">已缴费 ✅</option>
+              <option value="lost">已流失 ❌</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:14px;">
+          <p style="font-size:0.75rem;font-weight:700;color:#fbbf24;margin:0 0 10px;">🎁 转介绍奖励</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px;">
+            <div class="form-group" style="margin-bottom:0;">
+              <label class="form-label" style="font-size:0.78rem;">奖励类型</label>
+              <select class="form-select" id="ref-reward-type" style="width:100%;box-sizing:border-box;">
+                <option value="none">无奖励</option>
+                <option value="discount">课时优惠券</option>
+                <option value="cash">现金红包</option>
+                <option value="gift">实物礼品</option>
+                <option value="extension">课程延期</option>
+                <option value="other">其他</option>
+              </select>
+            </div>
+            <div class="form-group" style="margin-bottom:0;">
+              <label class="form-label" style="font-size:0.78rem;">奖励是否已发放</label>
+              <select class="form-select" id="ref-reward-given" style="width:100%;box-sizing:border-box;">
+                <option value="false">⏳ 未发放</option>
+                <option value="true">✅ 已发放</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group" style="margin-bottom:0;">
+            <label class="form-label" style="font-size:0.78rem;">奖励备注（金额/礼品内容等）</label>
+            <input type="text" class="form-input" id="ref-reward-note" placeholder="例如：50元课时券 / 50元微信红包" style="width:100%;box-sizing:border-box;">
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom:16px;">
+          <label class="form-label" style="font-size:0.78rem;">备注说明</label>
+          <textarea class="form-textarea" id="ref-notes" placeholder="例如：李妈妈说王爸爸的孩子正好在找STEAM课..." style="width:100%;height:56px;box-sizing:border-box;"></textarea>
+        </div>
+        <button type="submit" class="ops-save" style="width:100%;">💾 保存转介绍记录</button>
+      </form>
+    </div>
+  </div>
 
   <!-- Identity Modal -->
   <div class="identity-modal-overlay" id="identity-modal" style="display:none">
@@ -1062,24 +1397,16 @@
     let allLeads = [];
 
     function switchTab(tab) {
-      const btnDashboard = document.getElementById('tab-dashboard');
-      const btnLeads = document.getElementById('tab-leads');
-      const panelDashboard = document.getElementById('panel-dashboard');
-      const panelLeads = document.getElementById('panel-leads');
-      
-      if (tab === 'dashboard') {
-        btnDashboard.classList.add('active');
-        btnLeads.classList.remove('active');
-        panelDashboard.style.display = 'block';
-        panelLeads.style.display = 'none';
-        renderDashboard();
-      } else {
-        btnDashboard.classList.remove('active');
-        btnLeads.classList.add('active');
-        panelDashboard.style.display = 'none';
-        panelLeads.style.display = 'block';
-        renderLeadsBoard();
-      }
+      const tabs = ['dashboard', 'leads', 'referral'];
+      tabs.forEach(t => {
+        const btn = document.getElementById('tab-' + t);
+        const panel = document.getElementById('panel-' + t);
+        if (btn) btn.classList.toggle('active', t === tab);
+        if (panel) panel.style.display = t === tab ? 'block' : 'none';
+      });
+      if (tab === 'dashboard') renderDashboard();
+      else if (tab === 'leads') renderLeadsBoard();
+      else if (tab === 'referral') renderReferralPanel();
     }
 
     async function renderLeadsBoard() {
@@ -1372,6 +1699,208 @@
       return colors[status] || '#ccc';
     }
 
+    // ---- Referral Management ----
+    let allReferrals = [];
+
+    async function renderReferralPanel() {
+      if (window.StarEarthDB) {
+        try { allReferrals = await window.StarEarthDB.getReferrals(); } catch(e) { console.warn('Load referrals failed:', e); }
+      }
+
+      // Stats
+      const total = allReferrals.length;
+      const paidCount = allReferrals.filter(r => r.status === 'paid').length;
+      const convRate = total > 0 ? Math.round(paidCount / total * 100) : 0;
+      const pendingRewards = allReferrals.filter(r => r.status === 'paid' && !r.reward_given && r.reward_type !== 'none').length;
+
+      document.getElementById('ref-sum-total').textContent = total;
+      document.getElementById('ref-sum-paid').textContent = paidCount;
+      document.getElementById('ref-sum-conv').textContent = convRate + '%';
+      document.getElementById('ref-sum-reward').textContent = pendingRewards;
+
+      // Filters
+      const filterStatus = document.getElementById('ref-filter-status').value;
+      const filterReward = document.getElementById('ref-filter-reward').value;
+      const filterSearch = document.getElementById('ref-filter-search').value.toLowerCase();
+
+      let filtered = allReferrals.filter(r => {
+        if (filterStatus && r.status !== filterStatus) return false;
+        if (filterReward !== '') {
+          const given = filterReward === 'true';
+          if (r.reward_type === 'none') return false;
+          if (r.reward_given !== given) return false;
+        }
+        if (filterSearch && !r.referrer_name?.toLowerCase().includes(filterSearch) && !r.referree_name?.toLowerCase().includes(filterSearch)) return false;
+        return true;
+      });
+
+      // Table body
+      const tbody = document.getElementById('referral-table-body');
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:40px;color:var(--text-muted);font-size:0.82rem;">暂无符合条件的转介绍记录</td></tr>`;
+      } else {
+        tbody.innerHTML = filtered.map(r => {
+          const statusCls = { paid: 'ref-status-paid', pending: 'ref-status-pending', lost: 'ref-status-lost' }[r.status] || 'ref-status-pending';
+          const statusLabel = { paid: '✅ 已缴费', pending: '⏳ 跟进中', lost: '❌ 已流失' }[r.status] || '跟进中';
+          const rewardLabel = { none: '无奖励', discount: '课时券', cash: '现金', gift: '礼品', extension: '课程延期', other: '其他' }[r.reward_type] || '无';
+          const rewardGivenHtml = r.reward_type === 'none'
+            ? `<span class="ref-reward-badge ref-reward-na">—</span>`
+            : r.reward_given
+              ? `<span class="ref-reward-badge ref-reward-done">✅ 已发放</span>`
+              : `<span class="ref-reward-badge ref-reward-none" style="cursor:pointer;" onclick="markRewardGiven('${r.id}')" title="点击标记已发放">⏳ 未发放</span>`;
+          return `<tr>
+            <td><div style="font-weight:700;">${escapeHtml(r.referrer_name)}</div><div style="font-size:0.7rem;color:var(--text-muted);">${escapeHtml(r.referrer_phone || '')}</div></td>
+            <td><div style="font-weight:600;">${escapeHtml(r.referree_name)}</div><div style="font-size:0.7rem;color:var(--text-muted);">${escapeHtml(r.referree_phone || '')}</div></td>
+            <td style="white-space:nowrap;">${escapeHtml(r.referral_date || '')}</td>
+            <td><span class="ref-status-badge ${statusCls}">${statusLabel}</span></td>
+            <td style="font-size:0.78rem;">${rewardLabel}${r.reward_note ? `<div style="font-size:0.67rem;color:var(--text-muted);margin-top:2px;">${escapeHtml(r.reward_note)}</div>` : ''}</td>
+            <td>${rewardGivenHtml}</td>
+            <td style="white-space:nowrap;">
+              <button class="lead-btn-action" onclick="openEditReferralModal('${r.id}')" title="编辑">✏️</button>
+              <button class="lead-btn-action" onclick="deleteReferralRecord('${r.id}')" title="删除">🗑️</button>
+            </td>
+          </tr>`;
+        }).join('');
+      }
+
+      // Leaderboard: count referrals per referrer
+      const refCounts = {};
+      allReferrals.forEach(r => {
+        const key = r.referrer_name;
+        if (!refCounts[key]) refCounts[key] = { name: key, total: 0, paid: 0 };
+        refCounts[key].total++;
+        if (r.status === 'paid') refCounts[key].paid++;
+      });
+      const sorted = Object.values(refCounts).sort((a, b) => b.total - a.total).slice(0, 8);
+      const maxCount = sorted.length > 0 ? sorted[0].total : 1;
+      const medals = ['🥇', '🥈', '🥉'];
+      document.getElementById('ref-leaderboard').innerHTML = sorted.length === 0
+        ? `<div style="text-align:center;color:var(--text-muted);font-size:0.8rem;padding:20px 0;">暂无数据</div>`
+        : sorted.map((item, i) => `
+          <div class="referral-leader-item">
+            <div class="referral-leader-rank">${medals[i] || (i + 1)}</div>
+            <div class="referral-leader-name">${escapeHtml(item.name)}</div>
+            <div class="referral-leader-bar"><div class="referral-leader-bar-fill" style="width:${Math.round(item.total / maxCount * 100)}%"></div></div>
+            <div class="referral-leader-count" style="white-space:nowrap;">${item.total}笔 (${item.paid}成交)</div>
+          </div>`).join('');
+
+      // Reward summary
+      const rewardTypes = { discount: '课时券', cash: '现金', gift: '礼品', extension: '课程延期', other: '其他' };
+      const rewardStat = {};
+      allReferrals.forEach(r => {
+        if (r.reward_type === 'none') return;
+        if (!rewardStat[r.reward_type]) rewardStat[r.reward_type] = { total: 0, given: 0 };
+        rewardStat[r.reward_type].total++;
+        if (r.reward_given) rewardStat[r.reward_type].given++;
+      });
+      const rewardEntries = Object.entries(rewardStat);
+      document.getElementById('ref-reward-summary').innerHTML = rewardEntries.length === 0
+        ? `<div style="text-align:center;padding:16px 0;color:var(--text-muted);">暂无奖励记录</div>`
+        : rewardEntries.map(([type, stat]) => `
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);">
+            <span style="font-weight:600;">${rewardTypes[type] || type}</span>
+            <span style="color:var(--text-muted);">${stat.given}/${stat.total} 已发放</span>
+          </div>`).join('');
+    }
+
+    function openAddReferralModal() {
+      document.getElementById('referral-form').reset();
+      document.getElementById('ref-id').value = '';
+      document.getElementById('ref-form-title').textContent = '新增转介绍记录';
+      document.getElementById('ref-date').value = new Date().toISOString().split('T')[0];
+      // Populate referrer datalist from existing leads
+      populateReferrerDatalist();
+      // Populate lead select
+      populateLeadSelect('');
+      document.getElementById('modal-referral-form').classList.add('active');
+    }
+
+    function openEditReferralModal(referralId) {
+      const r = allReferrals.find(x => x.id === referralId);
+      if (!r) return;
+      document.getElementById('ref-id').value = r.id;
+      document.getElementById('ref-referrer-name').value = r.referrer_name || '';
+      document.getElementById('ref-referrer-phone').value = r.referrer_phone || '';
+      document.getElementById('ref-referree-name').value = r.referree_name || '';
+      document.getElementById('ref-referree-phone').value = r.referree_phone || '';
+      document.getElementById('ref-date').value = r.referral_date || '';
+      document.getElementById('ref-status').value = r.status || 'pending';
+      document.getElementById('ref-reward-type').value = r.reward_type || 'none';
+      document.getElementById('ref-reward-given').value = String(r.reward_given || false);
+      document.getElementById('ref-reward-note').value = r.reward_note || '';
+      document.getElementById('ref-notes').value = r.notes || '';
+      document.getElementById('ref-form-title').textContent = '编辑转介绍记录';
+      populateReferrerDatalist();
+      populateLeadSelect(r.lead_id || '');
+      document.getElementById('modal-referral-form').classList.add('active');
+    }
+
+    function closeReferralModal() {
+      document.getElementById('modal-referral-form').classList.remove('active');
+    }
+
+    function populateReferrerDatalist() {
+      // Build suggestions from existing leads (paid ones are good referrer candidates)
+      const dl = document.getElementById('referrer-name-list');
+      const names = [...new Set(allLeads.map(l => l.parent_name).filter(Boolean))];
+      dl.innerHTML = names.map(n => `<option value="${escapeHtml(n)}"></option>`).join('');
+    }
+
+    function populateLeadSelect(selectedId) {
+      const sel = document.getElementById('ref-lead-id');
+      sel.innerHTML = `<option value="">— 不关联 —</option>`
+        + allLeads.map(l => `<option value="${l.id}" ${l.id === selectedId ? 'selected' : ''}>${escapeHtml(l.parent_name)}${l.child_name ? ' (' + escapeHtml(l.child_name) + ')' : ''}</option>`).join('');
+    }
+
+    function onRefLeadSelect() {
+      const leadId = document.getElementById('ref-lead-id').value;
+      if (!leadId) return;
+      const lead = allLeads.find(l => l.id === leadId);
+      if (!lead) return;
+      document.getElementById('ref-referree-name').value = lead.parent_name || '';
+      document.getElementById('ref-referree-phone').value = lead.parent_phone || '';
+    }
+
+    async function saveReferralForm(e) {
+      e.preventDefault();
+      const id = document.getElementById('ref-id').value || ('ref_' + Date.now() + Math.random().toString(36).substr(2, 4));
+      const referral = {
+        id,
+        referrer_name: document.getElementById('ref-referrer-name').value.trim(),
+        referrer_phone: document.getElementById('ref-referrer-phone').value.trim(),
+        referree_name: document.getElementById('ref-referree-name').value.trim(),
+        referree_phone: document.getElementById('ref-referree-phone').value.trim(),
+        referral_date: document.getElementById('ref-date').value,
+        status: document.getElementById('ref-status').value,
+        reward_type: document.getElementById('ref-reward-type').value,
+        reward_given: document.getElementById('ref-reward-given').value === 'true',
+        reward_note: document.getElementById('ref-reward-note').value.trim(),
+        lead_id: document.getElementById('ref-lead-id').value || null,
+        notes: document.getElementById('ref-notes').value.trim(),
+        created_at: (allReferrals.find(r => r.id === id) || {}).created_at || new Date().toISOString(),
+      };
+      if (window.StarEarthDB) await window.StarEarthDB.saveReferral(referral);
+      closeReferralModal();
+      showToast('✅ 转介绍记录已保存', 'success');
+      renderReferralPanel();
+    }
+
+    async function deleteReferralRecord(referralId) {
+      if (!confirm('确认删除该转介绍记录吗？')) return;
+      if (window.StarEarthDB) await window.StarEarthDB.deleteReferral(referralId);
+      showToast('🗑️ 转介绍记录已删除', 'success');
+      renderReferralPanel();
+    }
+
+    async function markRewardGiven(referralId) {
+      const r = allReferrals.find(x => x.id === referralId);
+      if (!r) return;
+      r.reward_given = true;
+      if (window.StarEarthDB) await window.StarEarthDB.saveReferral(r);
+      showToast('🎁 奖励已标记为发放', 'success');
+      renderReferralPanel();
+    }
+
     // Init — check role access first
     setTimeout(() => {
       const identity = window.StarEarthIdentity?.getSavedIdentity();
@@ -1393,7 +1922,23 @@
         window.StarEarthDB.getParentLeads().then(leads => {
           allLeads = leads;
         }).catch(e => console.warn('Pre-load leads failed:', e));
+        window.StarEarthDB.getReferrals().then(refs => {
+          allReferrals = refs;
+        }).catch(e => console.warn('Pre-load referrals failed:', e));
       }
+
+      // Handle referral grid responsiveness
+      function adjustRefGrid() {
+        const grid = document.getElementById('ref-grid');
+        if (!grid) return;
+        if (window.innerWidth <= 1024) {
+          grid.style.gridTemplateColumns = '1fr';
+        } else {
+          grid.style.gridTemplateColumns = '1fr 320px';
+        }
+      }
+      adjustRefGrid();
+      window.addEventListener('resize', adjustRefGrid);
     }, 300);
   </script>
 </body>

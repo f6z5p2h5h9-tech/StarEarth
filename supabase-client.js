@@ -1055,6 +1055,78 @@ async function deleteParentLead(leadId) {
   }
 }
 
+// ============================================================
+// 家长转介绍记录 (Referrals)
+// ============================================================
+const REFERRALS_LOCAL_KEY = 'se-referrals';
+
+async function getReferrals() {
+  if (isSupabaseReady()) {
+    try {
+      const { data, error } = await _sbClient
+        .from('ops_referrals')
+        .select('*')
+        .order('created_at', { ascending: false });
+      if (error) throw error;
+      // Sync to local as cache
+      localStorage.setItem(REFERRALS_LOCAL_KEY, JSON.stringify(data || []));
+      return data || [];
+    } catch (err) {
+      console.warn('⚠️ Supabase getReferrals failed, loading from local:', err);
+    }
+  }
+  try { return JSON.parse(localStorage.getItem(REFERRALS_LOCAL_KEY) || '[]'); } catch { return []; }
+}
+
+async function saveReferral(referral) {
+  const row = {
+    id: referral.id,
+    referrer_name: referral.referrer_name,
+    referrer_phone: referral.referrer_phone || '',
+    referree_name: referral.referree_name,
+    referree_phone: referral.referree_phone || '',
+    referral_date: referral.referral_date || new Date().toISOString().split('T')[0],
+    reward_type: referral.reward_type || 'none',
+    reward_given: referral.reward_given || false,
+    reward_note: referral.reward_note || '',
+    lead_id: referral.lead_id || null,
+    status: referral.status || 'pending',
+    notes: referral.notes || '',
+    created_at: referral.created_at || new Date().toISOString(),
+  };
+  // Update local cache
+  try {
+    const local = JSON.parse(localStorage.getItem(REFERRALS_LOCAL_KEY) || '[]');
+    const idx = local.findIndex(r => r.id === row.id);
+    if (idx >= 0) local[idx] = row; else local.unshift(row);
+    localStorage.setItem(REFERRALS_LOCAL_KEY, JSON.stringify(local));
+  } catch {}
+
+  if (isSupabaseReady()) {
+    try {
+      await _sbClient.from('ops_referrals').upsert(row, { onConflict: 'id' });
+    } catch (err) {
+      console.warn('⚠️ Supabase saveReferral failed:', err);
+    }
+  }
+}
+
+async function deleteReferral(referralId) {
+  // Update local cache
+  try {
+    const local = JSON.parse(localStorage.getItem(REFERRALS_LOCAL_KEY) || '[]');
+    localStorage.setItem(REFERRALS_LOCAL_KEY, JSON.stringify(local.filter(r => r.id !== referralId)));
+  } catch {}
+
+  if (isSupabaseReady()) {
+    try {
+      await _sbClient.from('ops_referrals').delete().eq('id', referralId);
+    } catch (err) {
+      console.warn('⚠️ Supabase deleteReferral failed:', err);
+    }
+  }
+}
+
 async function syncLocalStorageToCloud() {
   if (!isSupabaseReady()) return;
   const SYNC_FLAG = 'se-synced-local-to-cloud-20260531';
@@ -1301,6 +1373,8 @@ window.StarEarthDB = {
   getSettings, saveSetting, getInviteCode,
   // Parent Leads CRM
   getParentLeads, saveParentLead, deleteParentLead,
+  // Referrals (转介绍)
+  getReferrals, saveReferral, deleteReferral,
   // Heartbeat
   heartbeat,
 };
